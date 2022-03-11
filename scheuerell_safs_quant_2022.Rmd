@@ -1,0 +1,31 @@
+---
+output:
+  xaringan::moon_reader:
+    css: "my-theme.css"
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+---
+
+```{r setup, include=FALSE, message=FALSE}
+options(htmltools.dir.version = FALSE, servr.daemon = TRUE)
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, dpi=300, out.height="100%", out.width="100%")
+library(icons)
+```
+
+
+
+class: center, middle
+
+# Estimating metrics of community stability from time series data
+
+## Mark Scheuerell
+
+_U.S. Geological Survey<br>Washington Cooperative Fish and Wildlife Research Unit<br>School of Aquatic and Fishery Sciences<br>University of Washington<br>Seattle, WA_
+
+.futnote.purple-text[`r icon_style(fontawesome("envelope"), fill = "#844870")` scheuerl@uw.edu]
+
+.citation.blue-text[`r icon_style(fontawesome("twitter"), fill = "#488fdf")` @mark_scheuerell]
+
+
