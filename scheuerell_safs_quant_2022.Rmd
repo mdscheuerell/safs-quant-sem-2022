@@ -131,9 +131,32 @@ for(i in 1:NN) {
 
 # Density-dependent population growth
 
-Stochastic Gompertz model
+Discrete-time Gompertz model
 
-$$N_t = N_{t-1} \text{e}^{(r_{max} + (b - 1) \log(N_{t-1}))} \text{e}^{w_t}  ~ \text{with} ~ w_t \sim \text{N}(0,q)$$
+$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))}$$
+
+
+---
+
+# Density-dependent population growth
+
+Stochastic, discrete-time Gompertz model
+
+$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(w_t)}}_{\text{environment}}$$
+
+
+---
+
+# Density-dependent population growth
+
+Stochastic, discrete-time Gompertz model
+
+$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(w_t)}}_{\text{environment}} \\
+~ \\
+~ \\
+N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
+~ \\
+w_t \sim \text{N}(0,q)$$
 
 
 ---
@@ -142,65 +165,17 @@ $$N_t = N_{t-1} \text{e}^{(r_{max} + (b - 1) \log(N_{t-1}))} \text{e}^{w_t}  ~ \
 
 Stochastic Gompertz model
 
-$$
-N_t = N_{t-1} \text{e}^{(r_{max} + (b - 1) \log(N_{t-1}))} \text{e}^{w_t}  ~ \text{with} ~ w_t \sim \text{N}(0,r)
-$$
+$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)}$$
 
 Taking the log of both sides and substituting $x_t$ for $\log(N_t)$
 
-$$
-\begin{align}
+$$\begin{align}
 \log(N_t) & = \log(N_{t-1}) + r_{max} + (b - 1) \log(N_{t-1}) + w_t \\
 & \Downarrow \\
 x_t &= x_{t-1} + r_{max} + (b - 1) x_{t-1} + w_t \\
     &= x_{t-1} + r_{max} + b x_{t-1} - x_{t-1} + w_t \\
     &= r_{max} + b x_{t-1} + w_t
-\end{align}
-$$
-
----
-
-# Density-dependent population growth
-
-What is the mean of $\{x_t\}$?
-
-$$
-x_t = r_{max} + b x_{t-1} + w_t
-$$
-
-
----
-
-# Density-dependent population growth
-
-What is the mean of $\{x_t\}$?
-
-$$
-x_t = r_{max} + b x_{t-1} + w_t
-$$
-
-$$
-\text{E}(x_t) = \frac{r_{max}}{1 - b}
-$$
-
-
----
-
-# Density-dependent population growth
-
-$$
-x_t = r_{max} + b x_{t-1} + w_t
-$$
-
-It turns out that $r_{max}$ and $b$ are confounded and create a likelihood surface with a strong ridge
-
-This means we need a _long_ time series or mulitple observations of the process 
-
-In practice, we will de-mean our data and instead use a familiar AR(1) model
-
-$$
-x_t = b x_{t-1} + w_t
-$$
+\end{align}$$
 
 
 ---
@@ -209,19 +184,17 @@ $$
 
 If our population censuses contain observation or sampling errors, we can use a state-space version
 
-$$
-x_t = b x_{t-1} + w_t \\
-y_t = x_t + v_t
-$$
+$$x_t = r_{max} + b x_{t-1} + w_t \\
+~ \\
+y_t = x_t + v_t$$
 
 
 ---
 
-# Simulate a Gompertz model
+# Plot a random walk
 
-Simulate the AR(1) state model
-
-```{r, echo=TRUE}
+```{r, echo = FALSE, align.fig="center"}
+set.seed(20220401)
 ## number of time steps
 TT <- 50
 ## strength of density-dependence (0 < b < 1)
@@ -234,42 +207,11 @@ xx <- ww
 for(t in 2:TT) {
   xx[t] <- bb * xx[t-1] + ww[t]
 }
-```
-
-
----
-
-# Simulate a Gompertz model
-
-Add some observation error
-
-```{r, echo=TRUE}
-## obs errors with var = 0.5
-vv <- rnorm(TT, 0, sqrt(0.5))
+## obs errors with var = 1.5
+vv <- rnorm(TT, 0, sqrt(2))
 ## obs data
 yy <- xx + vv
-```
 
-
----
-
-# Plot a random walk
-
-Plot the state and observation
-
-```{r, echo=TRUE, eval=FALSE}
-plot.ts(xx, lwd = 2, type = "o", pch = 16, col = "gray",
-        ylim = c(min(xx,yy), max(xx,yy)),
-        ylab = expression(italic(x[t])~~or~~italic(y[t])))
-lines(yy, lwd = 2, type = "o", pch = 16, col = "blue")
-```
-
-
----
-
-# Plot a random walk
-
-```{r, align.fig="center"}
 par(mai = c(0.8,0.8,0,0), omi = c(0,0,0,0))
 plot.ts(xx, lwd = 2, type = "o", pch = 16, col = "gray",
         ylim = c(min(xx,yy), max(xx,yy)),
@@ -1187,6 +1129,25 @@ class: center, middle, inverse
 .footnoteSm.gray-text[
 <sup>\*</sup>Holmes, Ward, Scheuerell (2020) _Analysis of multivariate time-series using the MARSS package_
 ]
+
+
+---
+
+# Density-dependent population growth
+
+$$
+x_t = r_{max} + b x_{t-1} + w_t
+$$
+
+It turns out that $r_{max}$ and $b$ are confounded and create a likelihood surface with a strong ridge
+
+This means we need a _long_ time series or mulitple observations of the process 
+
+In practice, we will de-mean our data and instead use a familiar AR(1) model
+
+$$
+x_t = b x_{t-1} + w_t
+$$
 
 
 ---
