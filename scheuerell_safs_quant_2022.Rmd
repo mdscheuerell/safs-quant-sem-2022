@@ -140,6 +140,33 @@ $$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))}$$
 
 ---
 
+# Example of Gompertz dynamics
+
+```{r ex_gompertz, align.fig="center", fig.dim=c(5,3)}
+set.seed(20220401)
+## number of time steps
+TT <- 20
+
+r_max <- 0.7
+b <- 0.7
+
+NN <- rep(NA, TT)
+NN[1] <- 10
+
+for(tt in 2:TT) {
+  NN[tt] <- NN[tt-1] * exp(r_max + (b - 1) * log(NN[tt-1]))
+}
+
+par(mai = c(0.8,0.4,0,0), omi = c(0,0,0,0))
+plot.ts(NN, lwd = 2, type = "o", pch = 16, col = "gray",
+        yaxt = "n",
+        ylab = "")
+mtext(expression(italic(N[t])), side = 2, line = 1)
+```
+
+
+---
+
 # Density-dependent population growth
 
 .blue-text[
@@ -201,10 +228,10 @@ x_t &= x_{t-1} + r_{max} + (b - 1) x_{t-1} + w_t \\
 
 ---
 
-# Density-dependent population growth
+# Observation error
 
 .blue-text[
-### If our population censuses contain observation or sampling errors, we can add an observation (data) model
+### When our population censuses contain observation or sampling errors, we can add an observation (data) model
 ]
 
 $$x_t = r_{max} + b x_{t-1} + w_t \\
@@ -217,7 +244,6 @@ y_t = x_t + v_t$$
 # Example time series
 
 ```{r ex_ssm, align.fig="center", fig.dim=c(5,3)}
-set.seed(20220401)
 ## number of time steps
 TT <- 50
 ## strength of density-dependence (0 < b < 1)
@@ -246,34 +272,13 @@ lines(yy, lwd = 2, type = "o", pch = 16, col = "blue")
 
 ---
 
-# Covariates in state-space models
+# Effects of covariates on growth
 
-We can include covariates (explanatory variables) in our models as well
+.blue-text[
+### We can include the effects of (lagged) covariates on intrinsic growth
+]
 
-Covariates in the state model _affect the underlying process_
-
-$$
-x_t = b x_{t-1} + C c_t + w_t
-$$
-
-
----
-
-# Covariates in state-space models
-
-We can include covariates (explanatory variables) in our models as well
-
-Covariates in the state model _affect the underlying process_
-
-$$
-x_t = b x_{t-1} + C c_t + w_t
-$$
-
-Covariates in the observation model are _offsets to the underlying process_
-
-$$
-y_t = Z x_t + D d_t + v_t
-$$
+$$x_t = r_{max} + b x_{t-1} + C c_{t-h} + w_t$$
 
 
 ---
