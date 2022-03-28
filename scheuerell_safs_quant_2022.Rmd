@@ -142,26 +142,28 @@ $$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))}$$
 
 # Example of Gompertz dynamics
 
-```{r ex_gompertz, align.fig="center", fig.dim=c(5,3)}
-set.seed(20220401)
+```{r ex_gompertz, align.fig="center", fig.dim=c(6,4)}
 ## number of time steps
-TT <- 20
+TT <- 30
 
-r_max <- 0.7
-b <- 0.7
+r_max <- 1
+b <- 0.8
 
 NN <- rep(NA, TT)
-NN[1] <- 10
+NN[1] <- 1
 
 for(tt in 2:TT) {
   NN[tt] <- NN[tt-1] * exp(r_max + (b - 1) * log(NN[tt-1]))
 }
 
-par(mai = c(0.8,0.4,0,0), omi = c(0,0,0,0))
-plot.ts(NN, lwd = 2, type = "o", pch = 16, col = "gray",
+par(mai = c(1, 0.5, 0, 0), omi = c(0,0,0,0))
+plot.ts(NN, lwd = 2, type = "o", pch = 16, col = "dodgerblue",
         yaxt = "n",
         ylab = "")
-mtext(expression(italic(N[t])), side = 2, line = 1)
+text(x = 5, y = 120, expression(italic(r[max])==1))
+text(x = 5, y = 100, expression(italic(b)==0.8))
+mtext(expression(italic(N[t])),
+      side = 2, line = 1, cex = 1.5)
 ```
 
 
@@ -190,6 +192,31 @@ $$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}
 N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
 ~ \\
 w_t \sim \text{N}(0,q)$$
+
+
+---
+
+# Example of stochastic Gompertz dynamics
+
+```{r ex_gompertz_stoch, align.fig="center", fig.dim=c(6,4)}
+set.seed(20220401)
+
+ww <- rnorm(TT, 0, sqrt(0.1))
+
+for(tt in 2:TT) {
+  NN[tt] <- NN[tt-1] * exp(r_max + (b - 1) * log(NN[tt-1]) + ww[tt])
+}
+
+par(mai = c(1, 0.5, 0, 0), omi = c(0,0,0,0))
+plot.ts(NN, lwd = 2, type = "o", pch = 16, col = "dodgerblue",
+        yaxt = "n",
+        ylab = "")
+text(x = 5, y = 130, expression(italic(r[max])==1))
+text(x = 5, y = 110, expression(italic(b)==0.8))
+text(x = 5, y = 90, expression(italic(q)==0.1))
+mtext(expression(italic(N[t])),
+      side = 2, line = 1, cex = 1.5)
+```
 
 
 ---
@@ -228,46 +255,20 @@ x_t &= x_{t-1} + r_{max} + (b - 1) x_{t-1} + w_t \\
 
 ---
 
-# Observation error
+# Density-dependent population growth
 
 .blue-text[
-### When our population censuses contain observation or sampling errors, we can add an observation (data) model
+### Stochastic, discrete-time Gompertz model (in log-space)
 ]
 
-$$x_t = r_{max} + b x_{t-1} + w_t \\
-~ \\
-y_t = x_t + v_t$$
+$$x_t = r_{max} + b x_{t-1} + w_t$$
 
+<br>
 
----
+.green-text[
+### This is an autoregressive model of order 1; AR(1)
+]
 
-# Example time series
-
-```{r ex_ssm, align.fig="center", fig.dim=c(5,3)}
-## number of time steps
-TT <- 50
-## strength of density-dependence (0 < b < 1)
-bb <- 0.5
-## time series of process errors with SD = 1
-ww <- rnorm(TT, 0, sqrt(1))
-## initialize state & set x0 = w0
-xx <- ww
-## loop over time steps
-for(t in 2:TT) {
-  xx[t] <- bb * xx[t-1] + ww[t]
-}
-## obs errors with var = 1.5
-vv <- rnorm(TT, 0, sqrt(2))
-## obs data
-yy <- xx + vv
-
-par(mai = c(0.8,0.4,0,0), omi = c(0,0,0,0))
-plot.ts(xx, lwd = 2, type = "o", pch = 16, col = "gray",
-        ylim = c(min(xx,yy), max(xx,yy)), yaxt = "n",
-        ylab = "")
-mtext(expression(italic(x[t])~~or~~italic(y[t])), side = 2, line = 1)
-lines(yy, lwd = 2, type = "o", pch = 16, col = "blue")
-```
 
 
 ---
@@ -285,43 +286,72 @@ $$x_t = r_{max} + b x_{t-1} + C c_{t-h} + w_t$$
 
 # Covariates in state-space models
 
-```{r}
-ww <- xx <- xy <- rnorm(TT)
+```{r ex_covar, , align.fig="center", fig.dim=c(6,4)}
+ww <- xx <- rnorm(TT)
 bb <- 0.7
-CC <- DD <- 2
-cc <- dd <- sin(2*pi*seq(TT)/12)
+CC <- 2
+cc <- sin(2*pi*seq(TT)/12)
   
 for(t in 2:TT) {
   xx[t] <- bb * xx[t-1] + CC * cc[t] + ww[t]
-  xy[t] <- bb * xy[t-1] + ww[t]
 }
-ee <- rnorm(TT)
-yy <- xy + DD * dd # + ee
-par(mai = c(0.9,0.9,0.5,0.1), omi = c(0,0,0,0))
+
+par(mai = c(1, 0.5, 0, 0), omi = c(0,0,0,0))
 plot.ts(xx, ylim = range(xx,yy),
-        lwd = 2, type = "o", pch = 16, col = "gray",
-        ylab = expression(italic(x[t])~~or~~italic(y[t])))
-mtext(side = 3, expression(italic(x[t])==italic(b)~italic(x[t-1])~+~italic(C)~italic(c[t])~+~italic(w[t])),
-      line = 0.5, adj = 0)
+        lwd = 2, type = "o", pch = 16, col = "dodgerblue",
+        ylab = "", yaxt = "n")
+mtext(expression(italic(x[t])),
+      side = 2, line = 1, cex = 1.5)
+
+# mtext(side = 3,
+      # expression(italic(x[t])==italic(b)~italic(x[t-1])~+~italic(C)~italic(c[t])~+~italic(w[t])),
+      # line = 0.5, adj = 0)
 ```
 
 
 ---
 
-# Covariates in state-space models
+# Observation error
 
-```{r}
-par(mai = c(0.9,0.9,0.5,0.1), omi = c(0,0,0,0))
-plot.ts(xx, ylim = range(xx,yy),
-        lwd = 2, type = "o", pch = 16, col = "gray",
-        ylab = expression(italic(x[t])~~or~~italic(y[t])))
-lines(yy, lwd = 2, type = "o", pch = 16, cex = 1.5, col = "blue")
-mtext(side = 3, expression(italic(x[t])==italic(b)~italic(x[t-1])~+~italic(w[t])),
-      line = 1.5, adj = 0)
-mtext(side = 3, expression(italic(y[t])==italic(x[t])~+~italic(D)~italic(d[t])),
-      line = 0.5, adj = 0)
+.blue-text[
+### When our population censuses contain observation or sampling errors, we can add an observation (data) model
+]
+
+$$x_t = r_{max} + b x_{t-1} + w_t \\
+~ \\
+y_t = x_t + v_t$$
+
+
+---
+
+# Example time series
+
+```{r ex_ssm, align.fig="center", fig.dim=c(6,4)}
+## number of time steps
+TT <- 50
+## strength of density-dependence (0 < b < 1)
+bb <- 0.5
+## time series of process errors with SD = 1
+ww <- rnorm(TT, 0, sqrt(1))
+## initialize state & set x0 = w0
+xx <- ww
+## loop over time steps
+for(t in 2:TT) {
+  xx[t] <- bb * xx[t-1] + ww[t]
+}
+## obs errors with var = 1.5
+vv <- rnorm(TT, 0, sqrt(2))
+## obs data
+yy <- xx + vv
+
+par(mai = c(1, 0.5, 0, 0), omi = c(0,0,0,0))
+plot.ts(xx, lwd = 2, type = "o", pch = 16, col = "gray",
+        ylim = c(min(xx,yy), max(xx,yy)), yaxt = "n",
+        ylab = "")
+mtext(expression(italic(x[t])~~or~~italic(y[t])),
+      side = 2, line = 1, cex = 1.5)
+lines(yy, lwd = 2, type = "o", pch = 16, col = "dodgerblue")
 ```
-
 
 
 ---
