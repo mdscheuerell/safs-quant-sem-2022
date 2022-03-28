@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>scheuerell_safs_quant_2022.knit</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="my-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: center, middle
+
+# Estimating metrics of community stability from time series data
+
+## Mark Scheuerell
+
+_U.S. Geological Survey&lt;br&gt;Washington Cooperative Fish and Wildlife Research Unit&lt;br&gt;School of Aquatic and Fishery Sciences&lt;br&gt;University of Washington&lt;br&gt;Seattle, WA_
+
+.futnote.purple-text[&lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#844870;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"&gt;&lt;/path&gt;&lt;/svg&gt; scheuerl@uw.edu]
+
+.citation.blue-text[&lt;svg viewBox="0 0 512 512" style="height:1em;position:relative;display:inline-block;top:.1em;fill:#488fdf;" xmlns="http://www.w3.org/2000/svg"&gt;  &lt;path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"&gt;&lt;/path&gt;&lt;/svg&gt; @mark_scheuerell]
+
+---
+
+# Acknowledgments
+
+.blue-text[
+## Eli Holmes (NOAA)
+
+## Eric Ward (NOAA)
+
+## Steve Katz (WSU)
+]
+
+
+---
+
+class: center, middle, inverse
+
+# Estimating species interactions is a long-standing goal in ecology
+
+
+---
+
+class: middle
+
+.green-text[
+# Predation
+]
+.blue-text.center[
+# Competition
+]
+.orange-text.right[
+# Facilitation
+]
+
+---
+
+class: frimg, inverse
+
+background-image: url(figs/bob_paine.jpg)
+background-size: 57%
+
+.gray-text.photo-credit.center[Photo: Anne Paine]
+
+
+---
+
+class: frimg, inverse
+
+background-image: url(figs/steve_carpenter.jpg)
+background-size: 70%
+
+.gray-text.photo-credit.center[Photo: Adam Hinterthuer]
+
+
+---
+
+# Estimating interactions from time series
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/plot_many_ts-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Density-dependent population growth
+
+.blue-text[
+### Discrete-time Gompertz model
+]
+
+`$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))}$$`
+
+
+---
+
+# Example of Gompertz dynamics
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz-1.png" width="100%" height="100%" /&gt;
+
+
+---
+
+# Example of Gompertz dynamics
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz_2-1.png" width="100%" height="100%" /&gt;
+
+
+---
+
+# Density-dependent population growth
+
+.blue-text[
+### Stochastic, discrete-time Gompertz model
+]
+
+`$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}_{\text{environment}}$$`
+
+
+---
+
+# Density-dependent population growth
+
+.blue-text[
+### Stochastic, discrete-time Gompertz model
+]
+
+`$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}_{\text{environment}} \\
+~ \\
+~ \\
+N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
+~ \\
+w_t \sim \text{N}(0,q)$$`
+
+
+---
+
+# Example of stochastic Gompertz dynamics
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz_stoch-1.png" width="100%" height="100%" /&gt;
+
+
+---
+
+# Density-dependent population growth
+
+.blue-text[
+### Stochastic, discrete-time Gompertz model (in log-space)
+]
+
+`$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
+~ \\
+\Downarrow \\
+~ \\
+\begin{align}
+\log(N_t) &amp;= \log(N_{t-1}) + r_{max} + (b - 1) \log(N_{t-1}) + w_t \\
+~ \\
+    &amp;= \log(N_{t-1}) + r_{max} + b \log(N_{t-1}) - \log(N_{t-1}) + w_t \\
+~ \\
+    &amp;= r_{max} + b \log(N_{t-1}) + w_t
+\end{align}$$`
+
+
+---
+
+# Density-dependent population growth
+
+.blue-text[
+### With a substitution, we can write the model as an&lt;br&gt;_autoregressive model_ of order 1, or AR(1)
+]
+
+`$$\begin{align}\log(N_t) = r_{max} &amp; + b \log(N_{t-1}) + w_t \\
+~ \\
+&amp; \Downarrow x_t = \log(N_t)\\
+~ \\
+x_t = r_{max} &amp;+ b x_{t-1} + w_t \end{align}$$`
+
+
+---
+
+class: middle
+
+.green-text[
+# Upwelling
+]
+.blue-text.center[
+# Precipitation
+]
+.orange-text.right[
+# Temperature
+]
+
+
+---
+
+# Environmental effects on growth
+
+.blue-text[
+### We can include the effects of (lagged) covariates on intrinsic growth
+]
+
+`$$x_t = r_{max} + b x_{t-1} + C c_{t-h} + w_t$$`
+
+
+---
+
+# Environmental effects on growth
+
+.blue-text[
+### We can include the effects of (lagged) covariates on intrinsic growth
+]
+
+`$$x_t = r_{max} + b x_{t-1} + C c_{t-h} + w_t$$`
+
+&lt;br&gt;
+
+.blue-text[
+### For example, a sine wave
+]
+
+`$$c_t = \sin \left( \tfrac{\pi}{6} t \right)$$`
+
+
+---
+
+# Environmental effects on dynamics
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_covar, -1.png" width="100%" height="100%" /&gt;
+
+
+---
+
+# Observation error
+
+.blue-text[
+### When our population censuses contain observation or sampling errors, we can add an observation (data) model
+]
+
+`$$x_t = r_{max} + b x_{t-1} + w_t \\
+~ \\
+y_t = x_t + v_t$$`
+
+
+---
+
+# Example time series
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_ssm-1.png" width="100%" height="100%" /&gt;
+
+
+---
+
+class: inverse, center, middle
+
+# Community dynamics
+
+
+---
+
+# Estimating community interactions
+
+### Number today is a function of the number yesterday
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/MAR_diag_1-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Estimating community interactions
+
+### and the number of predators, prey &amp; competitors
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/MAR_diag_2-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# State model for species interactions
+
+### and external forces at various times
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/MAR_diag_3-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# State model for species interactions
+
+`$$x_{i,t} = r_{max} + \sum^{m}_{j = 1}{b_{i,j} x_{j,t}} + w_t$$`
+
+where `\(b_{i,j}\)` is the effect of the `\(j^{th}\)` species on species `\(i\)` and
+
+`\(b_{i=j}\)` is the density-dependent effect
+
+
+---
+
+# State model for species interactions
+
+We can write this model in matrix notation as
+
+`$$\mathbf{x}_t = \mathbf{r} +  \mathbf{B} \mathbf{x}_{t-1} + \mathbf{w}_t$$`
+
+with
+
+`$$\mathbf{B} =
+\begin{bmatrix}
+b_{1,1} &amp; b_{1,2} &amp; \dots &amp; b_{1,m} \\
+b_{2,1} &amp; b_{1,2} &amp; \dots &amp; b_{2,m} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+b_{m,1} &amp; b_{m,2} &amp; \dots &amp; b_{m,m}
+\end{bmatrix}$$`
+
+
+---
+
+# State model for species interactions
+
+Including the effects of exogenous drivers yields
+
+`$$\mathbf{x}_t = \mathbf{r} + \mathbf{B} \mathbf{x}_{t-1} + \mathbf{C} \mathbf{c}_{t-h} + \mathbf{w}_t$$`
+
+&lt;br&gt;
+
+Note that the lag `\(h \geq 0\)`
+
+
+---
+
+# State model for species interactions
+
+Including the effects of exogenous drivers
+
+`$$\mathbf{x}_t = \mathbf{r} + \mathbf{B} \mathbf{x}_{t-1} + \mathbf{C} \mathbf{c}_{t-h} + \mathbf{w}_t$$`
+
+&lt;br&gt;
+
+The `\(m \times p\)` matrix `\(\mathbf{C}\)` contains the effect(s) of each covariate (cols) on each state (rows)
+
+The `\(p \times 1\)` column vector `\(\mathbf{c}_{t-h}\)` contains each of the `\(p\)` covariates at time `\(t - k\)`
+
+
+---
+
+# Covariate effects
+
+The effect(s) of covariates can vary by state/species/etc
+
+`$$\mathbf{C} =
+\begin{bmatrix}
+C_{1, Temp} &amp; C_{1, DO} \\ 
+C_{2, Temp} &amp; C_{2, DO} \\ 
+\vdots &amp; \vdots \\ 
+C_{m, Temp} &amp; C_{m, DO}
+\end{bmatrix}
+~~ \text{or} ~~
+\mathbf{C} =
+\begin{bmatrix}
+C_{Temp} &amp; C_{DO} \\ 
+C_{Temp} &amp; C_{DO} \\ 
+\vdots &amp; \vdots \\ 
+C_{Temp} &amp; C_{DO}
+\end{bmatrix}$$`
+
+with
+
+`$$\mathbf{c}_{t-h} =
+\begin{bmatrix}
+Temp_{t-h} \\
+DO_{t-h}
+\end{bmatrix}$$`
+
+
+---
+
+# Simple model for 2+ time series | Random walk observed with error
+
+$$
+x_{i,t} = x_{i,t-1} + w_{i,t} \\
+y_{i,t} = x_{i,t} + a_i + v_{i,t}
+$$
+
+with
+
+`\(w_{i,t} \sim \text{N}(0, q)\)`
+
+`\(v_{i,t} \sim \text{N}(0, r)\)`
+
+
+---
+
+# Random walk observed with error
+
+$$
+x_{1,t} = x_{1,t-1} + w_{1,t} \\
+x_{2,t} = x_{2,t-1} + w_{2,t} \\
+\vdots \\
+x_{n,t} = x_{n,t-1} + w_{n,t}
+$$
+
+$$
+y_{1,t} = x_{1,t} + a_1 + v_{1,t} \\
+y_{2,t} = x_{2,t} + a_2 + v_{2,t} \\
+\vdots \\
+y_{n,t} = x_{n,t} + a_2 + v_{n,t} \\
+$$
+
+
+---
+
+# Random walk observed with error | In matrix form
+
+$$
+\begin{bmatrix}
+x_{1,t} \\
+x_{2,t} \\
+\vdots \\
+x_{n,t} \\
+\end{bmatrix} =
+\begin{bmatrix}
+x_{1,t-1} \\
+x_{2,t-1} \\
+\vdots \\
+x_{n,t-1} \\
+\end{bmatrix} + 
+\begin{bmatrix}
+w_{1,t} \\
+w_{2,t} \\
+\vdots \\
+w_{n,t} \\
+\end{bmatrix}
+$$
+
+$$
+\begin{bmatrix}
+y_{1,t} \\
+y_{2,t} \\
+\vdots \\
+y_{n,t} \\
+\end{bmatrix} =
+\begin{bmatrix}
+x_{1,t} \\
+x_{2,t} \\
+\vdots \\
+x_{n,t} \\
+\end{bmatrix} + 
+\begin{bmatrix}
+a_1 \\
+a_2 \\
+\vdots \\
+a_n \\
+\end{bmatrix} + 
+\begin{bmatrix}
+v_{1,t} \\
+v_{2,t} \\
+\vdots \\
+v_{n,t} \\
+\end{bmatrix}
+$$
+
+
+---
+
+# Random walk observed with error | In matrix form
+
+$$
+\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{y}_t = \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t
+$$
+
+with 
+
+`\(\mathbf{w}_t \sim \text{MVN}(\mathbf{0}, \mathbf{Q})\)`
+
+`\(\mathbf{v}_t \sim \text{MVN}(\mathbf{0}, \mathbf{R})\)`
+
+
+---
+
+# Forms of covariances matrices `\(\mathbf{Q}\)`
+
+No covariance
+
+$$
+\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; \sigma &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; \sigma &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp; \sigma
+\end{bmatrix}
+~\text{or}~~
+\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma_1 &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; \sigma_2 &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; \sigma_3 &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp; \sigma_4
+\end{bmatrix}
+$$
+
+
+---
+
+# Forms of covariances matrices `\(\mathbf{Q}\)`
+
+With covariance
+
+$$
+\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma &amp; \gamma &amp; \gamma &amp; \gamma \\
+ \gamma &amp; \sigma &amp; \gamma &amp; \gamma \\
+ \gamma &amp; \gamma &amp; \sigma &amp; \gamma \\
+ \gamma &amp; \gamma &amp; \gamma &amp; \sigma
+\end{bmatrix}
+~\text{or}~~
+\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma_1 &amp; \gamma_{1,2} &amp; \gamma_{1,3} &amp; \gamma_{1,4} \\
+ \gamma_{1,2} &amp; \sigma_2 &amp; \gamma_{2,3} &amp; \gamma_{2,4} \\
+ \gamma_{1,3} &amp; \gamma_{2,3} &amp; \sigma_3 &amp; \gamma_{3,4} \\
+ \gamma_{1,4} &amp; \gamma_{2,4} &amp; \gamma_{3,4} &amp; \sigma_4
+\end{bmatrix}
+$$
+
+
+---
+
+# Forms of covariances matrices `\(\mathbf{R}\)`
+
+No covariance
+
+$$
+\mathbf{R} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; \sigma &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; \sigma &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp; \sigma
+\end{bmatrix}
+~\text{or}~~
+\mathbf{R} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma_1 &amp; 0 &amp; 0 &amp; 0 \\
+ 0 &amp; \sigma_2 &amp; 0 &amp; 0 \\
+ 0 &amp; 0 &amp; \sigma_3 &amp; 0 \\
+ 0 &amp; 0 &amp; 0 &amp; \sigma_4
+\end{bmatrix}
+$$
+
+
+---
+
+# Forms of covariances matrices `\(\mathbf{R}\)`
+
+With covariance
+
+$$
+\mathbf{R} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma &amp; \gamma &amp; \gamma &amp; \gamma \\
+ \gamma &amp; \sigma &amp; \gamma &amp; \gamma \\
+ \gamma &amp; \gamma &amp; \sigma &amp; \gamma \\
+ \gamma &amp; \gamma &amp; \gamma &amp; \sigma
+\end{bmatrix}
+$$
+
+
+
+
+---
+
+# Animal tracking
+
+Estimating animal locations from tagging is a classic example of applying this type of multivariate state-space model
+
+$$
+LAT_t = LAT_{t-1} + w_{LAT,t} \\
+LON_t = LON_{t-1} + w_{LON,t} \\
+$$
+
+$$
+y_t = LAT_t + v_{y,t} \\
+x_t = LON_t + v_{x,t} \\
+$$
+
+
+---
+
+# Random walk observed with error | In matrix form
+
+$$
+\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{y}_t = \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t \\
+\Downarrow \\
+\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t
+$$
+
+with `\(\mathbf{Z}\)` equal to the `\(n \times n\)` Identity matrix `\(\mathbf{I}_n\)`
+
+
+---
+
+# Random walk observed with error | In matrix form
+
+$$
+\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t
+$$
+
+Note that both `\(\mathbf{x}_t\)` and `\(\mathbf{y}_t\)` are `\(n \times 1\)` column vectors
+
+
+---
+
+# Multiple observations of one state
+
+What if we had multiple observations of only 1 state?
+
+If so, `\(\mathbf{x}_t\)` would be a `\(1 \times 1\)` vector (ie, a scalar) and `\(\mathbf{y}_t\)` would be an `\(n \times 1\)` column vector
+
+$$
+[x_t] = [x_{t-1}] + [w_t]
+$$
+
+$$
+\begin{bmatrix}
+y_{1,t} \\
+y_{2,t} \\
+\vdots \\
+y_{n,t} \\
+\end{bmatrix} =
+\begin{bmatrix}
+x_{1,t} \\
+x_{2,t} \\
+\vdots \\
+x_{n,t} \\
+\end{bmatrix} + 
+\begin{bmatrix}
+a_1 \\
+a_2 \\
+\vdots \\
+a_n \\
+\end{bmatrix} + 
+\begin{bmatrix}
+v_{1,t} \\
+v_{2,t} \\
+\vdots \\
+v_{n,t} \\
+\end{bmatrix}
+$$
+
+
+---
+
+# Multiple observations of one state
+
+$$
+[x_t] = [x_{t-1}] + [w_t]
+$$
+
+$$
+\begin{bmatrix}
+y_{1,t} \\
+y_{2,t} \\
+\vdots \\
+y_{n,t} \\
+\end{bmatrix} =
+\begin{bmatrix}
+x_{1,t} \\
+x_{2,t} \\
+\vdots \\
+x_{n,t} \\
+\end{bmatrix} + 
+\begin{bmatrix}
+a_1 \\
+a_2 \\
+\vdots \\
+a_n \\
+\end{bmatrix} + 
+\begin{bmatrix}
+v_{1,t} \\
+v_{2,t} \\
+\vdots \\
+v_{n,t} \\
+\end{bmatrix}
+$$
+
+We need a way to map the `\(1 \times 1\)` state onto the `\(n \times 1\)` vector of observations
+
+$$
+\mathbf{y}_t = ~?~ x_t
+$$
+
+
+---
+
+# Multiple observations of one state
+
+We'll use the matrix `\(\mathbf{Z}\)` we saw earlier and treat `\(x_t\)` like a matrix
+
+$$
+\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t
+$$
+
+Recall that the inner dimensions must match when multiplying matrices, such that
+
+$$
+[n \times m] [m \times p] = [n \times p]
+$$
+
+If `\(\mathbf{y}_t\)` is `\(n \times 1\)` and `\(\mathbf{x}_t\)` is `\(1 \times 1\)` then `\(\mathbf{Z}\)` must be `\(n \times 1\)` 
+
+$$
+[n \times 1] = [n \times 1] [1 \times 1]
+$$
+
+
+---
+
+# Multiple observations of one state
+
+For example
+
+$$
+\begin{bmatrix}
+y_{1,t} \\
+y_{2,t} \\
+y_{3,t}
+\end{bmatrix} =
+\begin{bmatrix}
+1 \\
+1 \\
+1
+\end{bmatrix}
+\begin{bmatrix}
+x_t
+\end{bmatrix} + 
+\begin{bmatrix}
+a_1 \\
+a_2 \\
+a_3
+\end{bmatrix} + 
+\begin{bmatrix}
+v_{1,t} \\
+v_{2,t} \\
+v_{3,t}
+\end{bmatrix}
+$$
+
+
+---
+
+# Multiple obs of multiple states
+
+What if we had `\(n\)` observations of `\(m\)` different states?
+
+We just need to follow the same logic for matrix multiplication
+
+
+---
+
+# Multiple obs of multiple states
+
+For example
+
+$$
+\begin{bmatrix}
+ y_1 \\
+ y_2 \\
+ y_3 \\
+ y_4 \\
+ y_5 
+\end{bmatrix}_t =
+\begin{bmatrix}
+ 1 &amp; 0 &amp; 0 \\
+ 0 &amp; 1 &amp; 0 \\
+ 0 &amp; 1 &amp; 0 \\
+ 0 &amp; 0 &amp; 1 \\
+ 0 &amp; 0 &amp; 1 \\
+\end{bmatrix} \times
+\begin{bmatrix}
+ x_1 \\
+ x_2 \\
+ x_3 
+\end{bmatrix}_t +
+\begin{bmatrix}
+ a_1 \\
+ a_2 \\
+ a_3 \\
+ a_4 \\
+ a_5 
+\end{bmatrix} +
+\begin{bmatrix}
+ v_1 \\
+ v_2 \\
+ v_3 \\
+ v_4 \\
+ v_5 
+\end{bmatrix}_t
+$$
+
+`\(y_1\)` observes `\(x_1\)`  
+`\(y_2\)` &amp; `\(y_3\)` observe `\(x_2\)`  
+`\(y_4\)` &amp; `\(y_5\)` observe `\(x_3\)`  
+
+
+---
+
+# Identification of population structure
+
+We can use the same approach to systematically evaluate the data support for different hypotheses about the underlying population structure
+
+$$
+\mathbf{Z} =
+\begin{bmatrix}
+1 \\
+1 \\
+\vdots \\
+1
+\end{bmatrix}
+~~ \text{vs} ~~
+\mathbf{Z} =
+\begin{bmatrix}
+1 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 \\
+\vdots &amp; \vdots &amp; \vdots \\
+0 &amp; 0 &amp; 1 
+\end{bmatrix}
+~~ \text{vs} ~~
+\mathbf{Z} =
+\begin{bmatrix}
+1 &amp; 0 &amp; \dots &amp; 0 \\
+1 &amp; 0 &amp; \dots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; 0 \\
+0 &amp; 0 &amp; \dots &amp; 1 
+\end{bmatrix}
+$$
+
+
+---
+
+# Popn structure of harbor seals
+
+Here is an example of using different forms of `\(\mathbf{Z}\)` to evaluate the possible metapopulation structure of Harbor Seals
+
+[Harbor seal example](https://nwfsc-timeseries.github.io/atsa-labs/sec-mss-west-coast-harbor-seals-counts.html)
+
+
+---
+
+# Multivariate autoregressive models
+
+## Describe .blue-text[community dynamics] over time
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/state_diag-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+.gray-text.citation[Ives et al (2003) *Ecology*]
+
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can be easy
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white-text[How many sockeye are there?]
+
+---
+
+class: center, middle, inverse
+
+# Observing nature can also be hard
+
+---
+
+class: frimg, bottom, right
+background-image: url(figs/sockeye.jpg)
+background-size: cover
+
+# .white-text[How many mayflies are there?]
+
+---
+
+# Multivariate autoregressive models
+
+## .purple-text[Data] = .blue-text[Truth] &amp;#177; .red-text[Errors]
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/obs_diag-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Multivariate autoregressive models
+
+## .blue-text.under[State model]
+
+## .blue-text[Density&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;&lt;/sub&gt;] = *f* (.blue-text[Density&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;-1 &amp;nbsp;&lt;/sub&gt;], .orange-text[Environment&lt;sub&gt;&lt;i&gt;t-h &amp;nbsp;&lt;/i&gt;&lt;/sub&gt;], .gray-text[error&lt;sub&gt;&lt;i&gt;t &amp;nbsp;&lt;/i&gt;&lt;/sub&gt;])
+
+## .purple-text.under[Observation model]
+
+## .purple-text[Data&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;&lt;/sub&gt;] = *g* (.blue-text[Density&lt;sub&gt;&lt;i&gt;t &amp;nbsp;&lt;/i&gt;&lt;/sub&gt;], .red-text[error&lt;sub&gt;&lt;i&gt;t &amp;nbsp;&lt;/i&gt;&lt;/sub&gt;])
+
+.gray-text.citation[Ives et al (2003) *Ecology*]
+
+
+---
+
+class: center, middle, inverse
+
+# How does one actually do this?
+
+
+---
+
+# .green-text[Canned **R** packages]
+
+## `dlm`, `vars`, `MARSS`&lt;sup&gt;*&lt;/sup&gt;
+
+
+.footnoteSm.gray-text[
+&lt;sup&gt;\*&lt;/sup&gt;Holmes, Ward, Scheuerell (2020) _Analysis of multivariate time-series using the MARSS package_
+]
+
+
+---
+
+# .green-text[Canned **R** packages]
+
+## `dlm`, `vars`, `MARSS`&lt;sup&gt;*&lt;/sup&gt;
+
+&lt;br&gt;
+
+# .blue-text[Code-your-own]
+
+## `JAGS`, `Stan`, `greta`
+
+.footnoteSm.gray-text[
+&lt;sup&gt;\*&lt;/sup&gt;Holmes, Ward, Scheuerell (2020) _Analysis of multivariate time-series using the MARSS package_
+]
+
+
+---
+
+# Density-dependent population growth
+
+$$
+x_t = r_{max} + b x_{t-1} + w_t
+$$
+
+It turns out that `\(r_{max}\)` and `\(b\)` are confounded and create a likelihood surface with a strong ridge
+
+This means we need a _long_ time series or mulitple observations of the process 
+
+In practice, we will de-mean our data and instead use a familiar AR(1) model
+
+$$
+x_t = b x_{t-1} + w_t
+$$
+
+
+---
+
+class: center, middle, inverse
+
+# Real-world example
+
+
+---
+
+# Acknowledgments
+
+.green-text[
+## [the late] W. T. Edmondson (UW)
+
+## Daniel Schindler (UW)
+
+## Arni Litt and many others (UW)
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
