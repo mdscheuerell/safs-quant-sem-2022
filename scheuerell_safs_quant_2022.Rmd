@@ -937,9 +937,9 @@ lines(s2, xx, col = "indianred", lwd = 2)
 ]
  
 
-$$\mu_{\infty} = \frac{r_{\max}}{1 - b} ~~ \rightarrow ~~ \mu_t = \mu_{\infty} + b^t(x_0 - \mu_{\infty})\\
+$$\mu_t = \mu_{\infty} + b^t \left( x_0 - \mu_{\infty} \right)\\
 ~ \\
-\sigma_{\infty} = \frac{q}{1 - b^2} ~~ \rightarrow ~~ \sigma_t = \sigma_{\infty}[1 - (b^2)^t]$$
+\sigma_t = \sigma_{\infty}[1 - (b^2)^t]$$
 
 
 ---
