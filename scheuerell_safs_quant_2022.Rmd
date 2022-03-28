@@ -169,6 +169,35 @@ mtext(expression(italic(N[t])),
 
 ---
 
+# Example of Gompertz dynamics
+
+```{r ex_gompertz_2, align.fig="center", fig.dim=c(6,4)}
+## number of time steps
+TT <- 30
+
+r_max <- 1
+b <- -0.8
+
+NN <- rep(NA, TT)
+NN[1] <- 1
+
+for(tt in 2:TT) {
+  NN[tt] <- NN[tt-1] * exp(r_max + (b - 1) * log(NN[tt-1]))
+}
+
+par(mai = c(1, 0.5, 0, 0), omi = c(0,0,0,0))
+plot.ts(NN, lwd = 2, type = "o", pch = 16, col = "dodgerblue",
+        yaxt = "n",
+        ylab = "")
+text(x = 25, y = 2.5, expression(italic(r[max])==1))
+text(x = 25, y = 2.3, expression(italic(b)==-0.8))
+mtext(expression(italic(N[t])),
+      side = 2, line = 1, cex = 1.5)
+```
+
+
+---
+
 # Density-dependent population growth
 
 .blue-text[
@@ -201,6 +230,8 @@ w_t \sim \text{N}(0,q)$$
 ```{r ex_gompertz_stoch, align.fig="center", fig.dim=c(6,4)}
 set.seed(20220401)
 
+b <- 0.8
+
 ww <- rnorm(TT, 0, sqrt(0.1))
 
 for(tt in 2:TT) {
@@ -228,28 +259,13 @@ mtext(expression(italic(N[t])),
 ]
 
 $$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
-\Downarrow\\
-\log(N_t) = \log(N_{t-1}) + r_{max} + (b - 1) \log(N_{t-1}) + w_t \\$$
-
-
----
-
-# Density-dependent population growth
-
-.blue-text[
-### Stochastic, discrete-time Gompertz model (in log-space)
-]
-
-$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
-\Downarrow\\
-\log(N_t) = \log(N_{t-1}) + r_{max} + (b - 1) \log(N_{t-1}) + w_t \\
+\Downarrow \\
+\begin{align}
+\log(N_t) &= \log(N_{t-1}) + r_{max} + (b - 1) \log(N_{t-1}) + w_t \\
 ~ \\
-\text{and with }x_t = \log(N_t)$$
-
-$$\begin{align}
-x_t &= x_{t-1} + r_{max} + (b - 1) x_{t-1} + w_t \\
-    &= x_{t-1} + r_{max} + b x_{t-1} - x_{t-1} + w_t \\
-    &= r_{max} + b x_{t-1} + w_t
+    &= \log(N_{t-1}) + r_{max} + b \log(N_{t-1}) - \log(N_{t-1}) + w_t \\
+~ \\
+    &= r_{max} + b \log(N_{t-1}) + w_t
 \end{align}$$
 
 
@@ -258,17 +274,14 @@ x_t &= x_{t-1} + r_{max} + (b - 1) x_{t-1} + w_t \\
 # Density-dependent population growth
 
 .blue-text[
-### Stochastic, discrete-time Gompertz model (in log-space)
+### With a substitution, we can write the model as an<br>_autoregressive model_ of order 1, or AR(1)
 ]
 
-$$x_t = r_{max} + b x_{t-1} + w_t$$
-
-<br>
-
-.green-text[
-### This is an autoregressive model of order 1; AR(1)
-]
-
+$$\begin{align}\log(N_{t-1}) = r_{max} & + b \log(N_{t-1}) + w_t \\
+~ \\
+& \Downarrow x_t = \log(N_t)\\
+~ \\
+x_t = r_{max} &+ b x_{t-1} + w_t \end{align}$$
 
 
 ---
