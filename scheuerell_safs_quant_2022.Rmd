@@ -928,11 +928,65 @@ lines(s2, xx, col = "indianred", lwd = 2)
 ```
 
 
+---
+
+# Univariate transition distribution
+
+.blue-text[
+### The _transition distribution_ is the conditional probability distribution for $x_t$ at any time $t$ given $x_0$
+]
+ 
+
+$$\mu_{\infty} = \frac{r_{\max}}{1 - b} ~~ \rightarrow ~~ \mu_t = \mu_{\infty} + b^t(x_0 - \mu_{\infty})\\
+~ \\
+\sigma_{\infty} = \frac{q}{1 - b^2} ~~ \rightarrow ~~ \sigma_t = \sigma_{\infty}[1 - (b^2)^t]$$
+
 
 ---
 
 # Univariate transition distribution
 
+```{r ex_trans_dist, fig.align='center', fig.dim=c(7,4)}
+
+qq <- 1
+
+x0 <- -7
+
+mt_1 <- vt_1 <- mt_2 <- vt_2 <- rep(NA, TT)
+
+mi_1 <- 0 # r_max / (1 - b1)
+
+vi_1 <- qq / (1 - b1^2)
+
+mi_2 <- 0 # r_max / (1 - b2)
+
+vi_2 <- qq / (1 - b2^2)
+
+for(tt in 1:TT) {
+  mt_1[tt] <- mi_1 + b1^tt * (x0 - mi_1)
+  vt_1[tt] <- vi_1 * (1 - (b1^2)^tt)
+  mt_2[tt] <- mi_2 + b2^tt * (x0 - mi_2)
+  vt_2[tt] <- vi_2 * (1 - (b2^2)^tt)
+}
+
+par(mfrow = c(1, 2),
+    mai = c(1, 1, 0.5, 0),
+    omi = c(0, 0, 0, 0))
+plot.ts(mt_1, ylim = range(c(mt_2, vt_2)),
+        las = 1, ylab = "", lwd = 2, col = "blue")
+lines(vt_1, lwd = 2, col = "purple")
+text(x = 25, y = -1, expression(mu[t]), col = "blue", cex = 1.5)
+text(x = 25, y = 2, expression(sigma[t]), col = "purple", cex = 1.5)
+mtext(expression(italic(b)==0.5), side = 3, line = 1, cex = 1.5)
+
+plot.ts(mt_2, ylim = range(c(mt_2, vt_2)),
+        las = 1, ylab = "", lwd = 2, col = "blue")
+lines(vt_2, lwd = 2, col = "purple")
+text(x = 25, y = -2, expression(mu[t]), col = "blue", cex = 1.5)
+text(x = 25, y = 4, expression(sigma[t]), col = "purple", cex = 1.5)
+mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
+
+```
 
 
 ---
