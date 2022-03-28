@@ -135,7 +135,7 @@ for(i in 1:NN) {
 ### Discrete-time Gompertz model
 ]
 
-$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))}$$
+$$N_t = N_{t-1} \exp{(r_{\max} + (b - 1) \log(N_{t-1}))}$$
 
 
 ---
@@ -204,7 +204,7 @@ mtext(expression(italic(N[t])),
 ### Stochastic, discrete-time Gompertz model
 ]
 
-$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}_{\text{environment}}$$
+$$N_t = N_{t-1} \exp{(r_{\max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}_{\text{environment}}$$
 
 
 ---
@@ -215,10 +215,10 @@ $$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}
 ### Stochastic, discrete-time Gompertz model
 ]
 
-$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}_{\text{environment}} \\
+$$N_t = N_{t-1} \exp{(r_{\max} + (b - 1) \log(N_{t-1}))} \underbrace{\exp{(e_t)}}_{\text{environment}} \\
 ~ \\
 ~ \\
-N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
+N_t = N_{t-1} \exp{(r_{\max} + (b - 1) \log(N_{t-1}) + w_t)} \\
 ~ \\
 w_t \sim \text{N}(0,q)$$
 
@@ -258,16 +258,16 @@ mtext(expression(italic(N[t])),
 ### Stochastic, discrete-time Gompertz model (in log-space)
 ]
 
-$$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
+$$N_t = N_{t-1} \exp{(r_{\max} + (b - 1) \log(N_{t-1}) + w_t)} \\
 ~ \\
 \Downarrow \\
 ~ \\
 \begin{align}
-\log(N_t) &= \log(N_{t-1}) + r_{max} + (b - 1) \log(N_{t-1}) + w_t \\
+\log(N_t) &= \log(N_{t-1}) + r_{\max} + (b - 1) \log(N_{t-1}) + w_t \\
 ~ \\
-    &= \log(N_{t-1}) + r_{max} + b \log(N_{t-1}) - \log(N_{t-1}) + w_t \\
+    &= \log(N_{t-1}) + r_{\max} + b \log(N_{t-1}) - \log(N_{t-1}) + w_t \\
 ~ \\
-    &= r_{max} + b \log(N_{t-1}) + w_t
+    &= r_{\max} + b \log(N_{t-1}) + w_t
 \end{align}$$
 
 
@@ -276,14 +276,14 @@ $$N_t = N_{t-1} \exp{(r_{max} + (b - 1) \log(N_{t-1}) + w_t)} \\
 # Density-dependent population growth
 
 .blue-text[
-### With a substitution, we can write the model as an<br>_autoregressive model_ of order 1, or AR(1)
+### With a substitution, we can rewrite the model as an<br>_autoregressive model_ of order 1, or AR(1)
 ]
 
-$$\begin{align}\log(N_t) = r_{max} & + b \log(N_{t-1}) + w_t \\
+$$\begin{align}\log(N_t) = r_{\max} & + b \log(N_{t-1}) + w_t \\
 ~ \\
 & \Downarrow x_t = \log(N_t)\\
 ~ \\
-x_t = r_{max} &+ b x_{t-1} + w_t \end{align}$$
+x_t = r_{\max} &+ b x_{t-1} + w_t \end{align}$$
 
 
 ---
@@ -309,7 +309,7 @@ class: middle
 ### We can include the effects of (lagged) covariates on intrinsic growth
 ]
 
-$$x_t = r_{max} + b x_{t-1} + C c_{t-h} + w_t$$
+$$x_t = r_{\max} + b x_{t-1} + C c_{t-h} + w_t$$
 
 
 ---
@@ -320,12 +320,12 @@ $$x_t = r_{max} + b x_{t-1} + C c_{t-h} + w_t$$
 ### We can include the effects of (lagged) covariates on intrinsic growth
 ]
 
-$$x_t = r_{max} + b x_{t-1} + C c_{t-h} + w_t$$
+$$x_t = r_{\max} + b x_{t-1} + C c_{t-h} + w_t$$
 
 <br>
 
 .blue-text[
-### For example, a sine wave
+### For example, a seasonal effect (sine wave)
 ]
 
 $$c_t = \sin \left( \tfrac{\pi}{6} t \right)$$
@@ -366,7 +366,7 @@ mtext(expression(italic(x[t])),
 ### When our population censuses contain observation or sampling errors, we can add an observation (data) model
 ]
 
-$$x_t = r_{max} + b x_{t-1} + w_t \\
+$$x_t = r_{\max} + b x_{t-1} + w_t \\
 ~ \\
 y_t = x_t + v_t$$
 
@@ -516,7 +516,11 @@ text("today", x=xm[2], y=ymb, cex=1.8, col="#ffffff", pos=1)
 
 # State model for species interactions
 
-$$x_{i,t} = r_{max} + \sum^{m}_{j = 1}{b_{i,j} x_{j,t}} + w_t$$
+.blue-text[
+### Sum of intra- and interspecific effects
+]
+
+$$x_{i,t} = r_{max, i} + \sum^{m}_{j = 1}{b_{i,j} x_{j,t}} + w_t$$
 
 where $b_{i,j}$ is the effect of the $j^{th}$ species on species $i$ and
 
@@ -527,18 +531,78 @@ $b_{i=j}$ is the density-dependent effect
 
 # State model for species interactions
 
-We can write this model in matrix notation as
+.blue-text[
+### We can write this model in matrix notation as
+]
 
 $$\mathbf{x}_t = \mathbf{r} +  \mathbf{B} \mathbf{x}_{t-1} + \mathbf{w}_t$$
 
 with
 
-$$\mathbf{B} =
+$$\mathbf{r} =
+\begin{bmatrix}
+r_1 \\
+r_2 \\
+\vdots \\
+r_m
+\end{bmatrix} ~~~
+\mathbf{B} =
 \begin{bmatrix}
 b_{1,1} & b_{1,2} & \dots & b_{1,m} \\
-b_{2,1} & b_{1,2} & \dots & b_{2,m} \\
+b_{2,1} & b_{2,2} & \dots & b_{2,m} \\
 \vdots & \vdots & \ddots & \vdots \\
 b_{m,1} & b_{m,2} & \dots & b_{m,m}
+\end{bmatrix} ~~~
+\mathbf{w}_t \sim \text{MVN}(\textbf{0}, \textbf{Q})$$
+
+
+---
+
+# Forms of covariances matrices $\mathbf{Q}$
+
+.blue-text[
+### No covariance (and $m = 4$)
+]
+
+$$\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma & 0 & 0 & 0 \\
+ 0 & \sigma & 0 & 0 \\
+ 0 & 0 & \sigma & 0 \\
+ 0 & 0 & 0 & \sigma
+\end{bmatrix}
+~\text{or}~~
+\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma_1 & 0 & 0 & 0 \\
+ 0 & \sigma_2 & 0 & 0 \\
+ 0 & 0 & \sigma_3 & 0 \\
+ 0 & 0 & 0 & \sigma_4
+\end{bmatrix}$$
+
+
+---
+
+# Forms of covariances matrices $\mathbf{Q}$
+
+.blue-text[
+### With covariance (and $m = 4$)
+]
+
+$$\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma & \gamma & \gamma & \gamma \\
+ \gamma & \sigma & \gamma & \gamma \\
+ \gamma & \gamma & \sigma & \gamma \\
+ \gamma & \gamma & \gamma & \sigma
+\end{bmatrix}
+~\text{or}~~
+\mathbf{Q} \stackrel{?}{=}
+\begin{bmatrix}
+ \sigma_1 & \gamma_{1,2} & \gamma_{1,3} & \gamma_{1,4} \\
+ \gamma_{1,2} & \sigma_2 & \gamma_{2,3} & \gamma_{2,4} \\
+ \gamma_{1,3} & \gamma_{2,3} & \sigma_3 & \gamma_{3,4} \\
+ \gamma_{1,4} & \gamma_{2,4} & \gamma_{3,4} & \sigma_4
 \end{bmatrix}$$
 
 
@@ -546,20 +610,9 @@ b_{m,1} & b_{m,2} & \dots & b_{m,m}
 
 # State model for species interactions
 
-Including the effects of exogenous drivers yields
-
-$$\mathbf{x}_t = \mathbf{r} + \mathbf{B} \mathbf{x}_{t-1} + \mathbf{C} \mathbf{c}_{t-h} + \mathbf{w}_t$$
-
-<br>
-
-Note that the lag $h \geq 0$
-
-
----
-
-# State model for species interactions
-
-Including the effects of exogenous drivers
+.blue-text[
+### Including the effects of exogenous drivers
+]
 
 $$\mathbf{x}_t = \mathbf{r} + \mathbf{B} \mathbf{x}_{t-1} + \mathbf{C} \mathbf{c}_{t-h} + \mathbf{w}_t$$
 
@@ -605,10 +658,8 @@ DO_{t-h}
 
 # Simple model for 2+ time series | Random walk observed with error
 
-$$
-x_{i,t} = x_{i,t-1} + w_{i,t} \\
-y_{i,t} = x_{i,t} + a_i + v_{i,t}
-$$
+$$x_{i,t} = x_{i,t-1} + w_{i,t} \\
+y_{i,t} = x_{i,t} + a_i + v_{i,t}$$
 
 with
 
@@ -621,27 +672,24 @@ $v_{i,t} \sim \text{N}(0, r)$
 
 # Random walk observed with error
 
-$$
-x_{1,t} = x_{1,t-1} + w_{1,t} \\
+$$x_{1,t} = x_{1,t-1} + w_{1,t} \\
 x_{2,t} = x_{2,t-1} + w_{2,t} \\
 \vdots \\
-x_{n,t} = x_{n,t-1} + w_{n,t}
-$$
+x_{n,t} = x_{n,t-1} + w_{n,t}$$
 
-$$
-y_{1,t} = x_{1,t} + a_1 + v_{1,t} \\
+$$y_{1,t} = x_{1,t} + a_1 + v_{1,t} \\
 y_{2,t} = x_{2,t} + a_2 + v_{2,t} \\
 \vdots \\
-y_{n,t} = x_{n,t} + a_2 + v_{n,t} \\
-$$
+y_{n,t} = x_{n,t} + a_2 + v_{n,t}$$
 
 
 ---
 
-# Random walk observed with error | In matrix form
+# Random walk observed with error
 
-$$
-\begin{bmatrix}
+### In matrix form
+
+$$\begin{bmatrix}
 x_{1,t} \\
 x_{2,t} \\
 \vdots \\
@@ -658,11 +706,9 @@ w_{1,t} \\
 w_{2,t} \\
 \vdots \\
 w_{n,t} \\
-\end{bmatrix}
-$$
+\end{bmatrix}$$
 
-$$
-\begin{bmatrix}
+$$\begin{bmatrix}
 y_{1,t} \\
 y_{2,t} \\
 \vdots \\
@@ -685,18 +731,17 @@ v_{1,t} \\
 v_{2,t} \\
 \vdots \\
 v_{n,t} \\
-\end{bmatrix}
-$$
+\end{bmatrix}$$
 
 
 ---
 
-# Random walk observed with error | In matrix form
+# Random walk observed with error 
 
-$$
-\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
-\mathbf{y}_t = \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t
-$$
+### In matrix form
+
+$$\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{y}_t = \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t$$
 
 with 
 
@@ -707,62 +752,11 @@ $\mathbf{v}_t \sim \text{MVN}(\mathbf{0}, \mathbf{R})$
 
 ---
 
-# Forms of covariances matrices $\mathbf{Q}$
-
-No covariance
-
-$$
-\mathbf{Q} \stackrel{?}{=}
-\begin{bmatrix}
- \sigma & 0 & 0 & 0 \\
- 0 & \sigma & 0 & 0 \\
- 0 & 0 & \sigma & 0 \\
- 0 & 0 & 0 & \sigma
-\end{bmatrix}
-~\text{or}~~
-\mathbf{Q} \stackrel{?}{=}
-\begin{bmatrix}
- \sigma_1 & 0 & 0 & 0 \\
- 0 & \sigma_2 & 0 & 0 \\
- 0 & 0 & \sigma_3 & 0 \\
- 0 & 0 & 0 & \sigma_4
-\end{bmatrix}
-$$
-
-
----
-
-# Forms of covariances matrices $\mathbf{Q}$
-
-With covariance
-
-$$
-\mathbf{Q} \stackrel{?}{=}
-\begin{bmatrix}
- \sigma & \gamma & \gamma & \gamma \\
- \gamma & \sigma & \gamma & \gamma \\
- \gamma & \gamma & \sigma & \gamma \\
- \gamma & \gamma & \gamma & \sigma
-\end{bmatrix}
-~\text{or}~~
-\mathbf{Q} \stackrel{?}{=}
-\begin{bmatrix}
- \sigma_1 & \gamma_{1,2} & \gamma_{1,3} & \gamma_{1,4} \\
- \gamma_{1,2} & \sigma_2 & \gamma_{2,3} & \gamma_{2,4} \\
- \gamma_{1,3} & \gamma_{2,3} & \sigma_3 & \gamma_{3,4} \\
- \gamma_{1,4} & \gamma_{2,4} & \gamma_{3,4} & \sigma_4
-\end{bmatrix}
-$$
-
-
----
-
 # Forms of covariances matrices $\mathbf{R}$
 
 No covariance
 
-$$
-\mathbf{R} \stackrel{?}{=}
+$$\mathbf{R} \stackrel{?}{=}
 \begin{bmatrix}
  \sigma & 0 & 0 & 0 \\
  0 & \sigma & 0 & 0 \\
@@ -776,8 +770,7 @@ $$
  0 & \sigma_2 & 0 & 0 \\
  0 & 0 & \sigma_3 & 0 \\
  0 & 0 & 0 & \sigma_4
-\end{bmatrix}
-$$
+\end{bmatrix}$$
 
 
 ---
@@ -786,47 +779,26 @@ $$
 
 With covariance
 
-$$
-\mathbf{R} \stackrel{?}{=}
+$$\mathbf{R} \stackrel{?}{=}
 \begin{bmatrix}
  \sigma & \gamma & \gamma & \gamma \\
  \gamma & \sigma & \gamma & \gamma \\
  \gamma & \gamma & \sigma & \gamma \\
  \gamma & \gamma & \gamma & \sigma
-\end{bmatrix}
-$$
+\end{bmatrix}$$
 
 
-
-
----
-
-# Animal tracking
-
-Estimating animal locations from tagging is a classic example of applying this type of multivariate state-space model
-
-$$
-LAT_t = LAT_{t-1} + w_{LAT,t} \\
-LON_t = LON_{t-1} + w_{LON,t} \\
-$$
-
-$$
-y_t = LAT_t + v_{y,t} \\
-x_t = LON_t + v_{x,t} \\
-$$
 
 
 ---
 
 # Random walk observed with error | In matrix form
 
-$$
-\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
+$$\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
 \mathbf{y}_t = \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t \\
 \Downarrow \\
 \mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
-\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t
-$$
+\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t$$
 
 with $\mathbf{Z}$ equal to the $n \times n$ Identity matrix $\mathbf{I}_n$
 
@@ -835,248 +807,10 @@ with $\mathbf{Z}$ equal to the $n \times n$ Identity matrix $\mathbf{I}_n$
 
 # Random walk observed with error | In matrix form
 
-$$
-\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
-\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t
-$$
+$$\mathbf{x}_t = \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t + \mathbf{a} + \mathbf{v}_t$$
 
 Note that both $\mathbf{x}_t$ and $\mathbf{y}_t$ are $n \times 1$ column vectors
-
-
----
-
-# Multiple observations of one state
-
-What if we had multiple observations of only 1 state?
-
-If so, $\mathbf{x}_t$ would be a $1 \times 1$ vector (ie, a scalar) and $\mathbf{y}_t$ would be an $n \times 1$ column vector
-
-$$
-[x_t] = [x_{t-1}] + [w_t]
-$$
-
-$$
-\begin{bmatrix}
-y_{1,t} \\
-y_{2,t} \\
-\vdots \\
-y_{n,t} \\
-\end{bmatrix} =
-\begin{bmatrix}
-x_{1,t} \\
-x_{2,t} \\
-\vdots \\
-x_{n,t} \\
-\end{bmatrix} + 
-\begin{bmatrix}
-a_1 \\
-a_2 \\
-\vdots \\
-a_n \\
-\end{bmatrix} + 
-\begin{bmatrix}
-v_{1,t} \\
-v_{2,t} \\
-\vdots \\
-v_{n,t} \\
-\end{bmatrix}
-$$
-
-
----
-
-# Multiple observations of one state
-
-$$
-[x_t] = [x_{t-1}] + [w_t]
-$$
-
-$$
-\begin{bmatrix}
-y_{1,t} \\
-y_{2,t} \\
-\vdots \\
-y_{n,t} \\
-\end{bmatrix} =
-\begin{bmatrix}
-x_{1,t} \\
-x_{2,t} \\
-\vdots \\
-x_{n,t} \\
-\end{bmatrix} + 
-\begin{bmatrix}
-a_1 \\
-a_2 \\
-\vdots \\
-a_n \\
-\end{bmatrix} + 
-\begin{bmatrix}
-v_{1,t} \\
-v_{2,t} \\
-\vdots \\
-v_{n,t} \\
-\end{bmatrix}
-$$
-
-We need a way to map the $1 \times 1$ state onto the $n \times 1$ vector of observations
-
-$$
-\mathbf{y}_t = ~?~ x_t
-$$
-
-
----
-
-# Multiple observations of one state
-
-We'll use the matrix $\mathbf{Z}$ we saw earlier and treat $x_t$ like a matrix
-
-$$
-\mathbf{y}_t = \mathbf{Z} \mathbf{x}_t
-$$
-
-Recall that the inner dimensions must match when multiplying matrices, such that
-
-$$
-[n \times m] [m \times p] = [n \times p]
-$$
-
-If $\mathbf{y}_t$ is $n \times 1$ and $\mathbf{x}_t$ is $1 \times 1$ then $\mathbf{Z}$ must be $n \times 1$ 
-
-$$
-[n \times 1] = [n \times 1] [1 \times 1]
-$$
-
-
----
-
-# Multiple observations of one state
-
-For example
-
-$$
-\begin{bmatrix}
-y_{1,t} \\
-y_{2,t} \\
-y_{3,t}
-\end{bmatrix} =
-\begin{bmatrix}
-1 \\
-1 \\
-1
-\end{bmatrix}
-\begin{bmatrix}
-x_t
-\end{bmatrix} + 
-\begin{bmatrix}
-a_1 \\
-a_2 \\
-a_3
-\end{bmatrix} + 
-\begin{bmatrix}
-v_{1,t} \\
-v_{2,t} \\
-v_{3,t}
-\end{bmatrix}
-$$
-
-
----
-
-# Multiple obs of multiple states
-
-What if we had $n$ observations of $m$ different states?
-
-We just need to follow the same logic for matrix multiplication
-
-
----
-
-# Multiple obs of multiple states
-
-For example
-
-$$
-\begin{bmatrix}
- y_1 \\
- y_2 \\
- y_3 \\
- y_4 \\
- y_5 
-\end{bmatrix}_t =
-\begin{bmatrix}
- 1 & 0 & 0 \\
- 0 & 1 & 0 \\
- 0 & 1 & 0 \\
- 0 & 0 & 1 \\
- 0 & 0 & 1 \\
-\end{bmatrix} \times
-\begin{bmatrix}
- x_1 \\
- x_2 \\
- x_3 
-\end{bmatrix}_t +
-\begin{bmatrix}
- a_1 \\
- a_2 \\
- a_3 \\
- a_4 \\
- a_5 
-\end{bmatrix} +
-\begin{bmatrix}
- v_1 \\
- v_2 \\
- v_3 \\
- v_4 \\
- v_5 
-\end{bmatrix}_t
-$$
-
-$y_1$ observes $x_1$  
-$y_2$ & $y_3$ observe $x_2$  
-$y_4$ & $y_5$ observe $x_3$  
-
-
----
-
-# Identification of population structure
-
-We can use the same approach to systematically evaluate the data support for different hypotheses about the underlying population structure
-
-$$
-\mathbf{Z} =
-\begin{bmatrix}
-1 \\
-1 \\
-\vdots \\
-1
-\end{bmatrix}
-~~ \text{vs} ~~
-\mathbf{Z} =
-\begin{bmatrix}
-1 & 0 & 0 \\
-0 & 1 & 0 \\
-\vdots & \vdots & \vdots \\
-0 & 0 & 1 
-\end{bmatrix}
-~~ \text{vs} ~~
-\mathbf{Z} =
-\begin{bmatrix}
-1 & 0 & \dots & 0 \\
-1 & 0 & \dots & 0 \\
-\vdots & \vdots & \ddots & 0 \\
-0 & 0 & \dots & 1 
-\end{bmatrix}
-$$
-
-
----
-
-# Popn structure of harbor seals
-
-Here is an example of using different forms of $\mathbf{Z}$ to evaluate the possible metapopulation structure of Harbor Seals
-
-[Harbor seal example](https://nwfsc-timeseries.github.io/atsa-labs/sec-mss-west-coast-harbor-seals-counts.html)
 
 
 ---
@@ -1241,10 +975,10 @@ class: center, middle, inverse
 # Density-dependent population growth
 
 $$
-x_t = r_{max} + b x_{t-1} + w_t
+x_t = r_{\max} + b x_{t-1} + w_t 
 $$
 
-It turns out that $r_{max}$ and $b$ are confounded and create a likelihood surface with a strong ridge
+It turns out that $r_{\max}$ and $b$ are confounded and create a likelihood surface with a strong ridge
 
 This means we need a _long_ time series or mulitple observations of the process 
 
