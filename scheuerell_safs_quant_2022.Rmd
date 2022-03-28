@@ -806,6 +806,30 @@ $$\mathbf{R} \stackrel{?}{=}
 
 class: center, middle, inverse
 
+# Metrics of stability
+
+
+---
+
+# Let's consider 3 metrics of stability
+
+.blue-text[
+### Rate of convergence
+]
+
+.green-text[
+### Reactivity
+]
+
+.orange-text[
+### Variance of the stationary distribution
+]
+
+
+---
+
+class: center, middle, inverse
+
 # How does one actually do this?
 
 
