@@ -814,7 +814,7 @@ class: center, middle, inverse
 # Let's consider 3 metrics of stability
 
 .blue-text[
-## Rate of convergence
+## Rate of convergence to equilibrium
 ]
 
 .green-text[
@@ -828,19 +828,45 @@ class: center, middle, inverse
 
 ---
 
+class: frimg
+background-image: url(figs/May_1972_stability.png)
+background-position: 50% 70%
+background-size: 70%
+
+# Rate of convergence to equilibrium
+
+.blue-text[
+### In deterministic models, equilibria are a point or stable limit cycle
+]
+
+.gray-text.citation[May (1972) _Science_]
+
+
+---
+
+# Rate of convergence to equilibrium
+
+.blue-text[
+### In stochastic models, the equilibria is a _stationary distribution_
+]
+
+
+
+---
+
 # Univariate stationary distribution
 
 .blue-text[
-### When $|b| < 1$, the equilibrium for an AR(1) process is called<br>the _stationary distribution_
+### When |b| < 1, an AR(1) process is "stationary"
 ]
 
-$$x_{\infty} \sim \text{N}(\mu_{\infty}, \sigma_{\infty})$$
-
-.blue-text[
-### with
-]
-
-$$\mu_{\infty} = \frac{r_{\max}}{1 - b} \\
+$$x_t = r_{\max} + b x_{t-1} + w_t \\
+~ \\
+\Downarrow \\
+~ \\
+x_{\infty} \sim \text{N}(\mu_{\infty}, \sigma_{\infty}) \\
+~ \\
+\mu_{\infty} = \frac{r_{\max}}{1 - b} \\
 ~ \\
 \sigma_{\infty} = \frac{q}{1 - b^2}$$
 
