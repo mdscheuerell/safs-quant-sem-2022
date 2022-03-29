@@ -971,6 +971,23 @@ $$\mu_t = \mu_{\infty} + b^t \left( x_0 - \mu_{\infty} \right)\\
 
 # Univariate transition distribution
 
+.blue-text[
+### The _transition distribution_ is the conditional probability distribution for $x_t$ at any time $t$ given $x_0$
+]
+
+$$\mu_t = \mu_{\infty} + b^t \left( x_0 - \mu_{\infty} \right)\\
+~ \\
+\sigma_t = \sigma_{\infty}[1 - (b^2)^t]$$
+
+.orange-text[
+### Note: the rate of convergence is governed by $b$
+]
+
+
+---
+
+# Univariate transition distribution
+
 ```{r ex_trans_dist, fig.align='center', fig.dim=c(7,4)}
 
 qq <- 1
@@ -1025,6 +1042,39 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 .green-text[
 ### The _stationary_ distribution is where we are headed
 ]
+
+
+---
+
+# Rate of convergence for multivariate models
+
+.blue-text[
+### For multivariate models, convergence is governed by the interaction matrix $\mathbf{B}$
+]
+
+.blue-text[
+### As with deterministic models, it depends on _dominant eigenvalues_
+]
+
+
+---
+
+# Rate of convergence for multivariate models
+
+.blue-text[
+### Rate of return for the mean $\mathbf{x}_t$
+]
+
+$$\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}: \max(\lambda_{\mathbf{B}})$$
+
+---
+
+# Rate of convergence for multivariate models
+
+.blue-text[
+### Rate of return for the covariance $\mathbf{x}_t$
+]
+
 
 
 ---
