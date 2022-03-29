@@ -814,7 +814,7 @@ class: center, middle, inverse
 # Let's consider 3 metrics of stability
 
 .blue-text[
-## Rate of convergence to equilibrium
+## Rate of return to equilibrium
 ]
 
 .green-text[
@@ -833,7 +833,7 @@ background-image: url(figs/May_1972_stability.png)
 background-position: 50% 70%
 background-size: 70%
 
-# Rate of convergence to equilibrium
+# Rate of return to equilibrium
 
 .blue-text[
 ### In deterministic models, equilibria are a point or stable limit cycle
@@ -844,12 +844,11 @@ background-size: 70%
 
 ---
 
-# Rate of convergence to equilibrium
+# Rate of return to equilibrium
 
 .blue-text[
-### In stochastic models, the equilibria is a _stationary distribution_
+### In stochastic models, the equilibrium is a _stationary distribution_
 ]
-
 
 
 ---
@@ -1046,7 +1045,7 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 
 ---
 
-# Rate of convergence for multivariate models
+# Rate of return for multivariate models
 
 .blue-text[
 ### For multivariate models, convergence is governed by the interaction matrix $\mathbf{B}$
@@ -1059,22 +1058,70 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 
 ---
 
-# Rate of convergence for multivariate models
+# Rate of return for multivariate models
 
 .blue-text[
-### Rate of return for the mean $\mathbf{x}_t$
+### Rate of return for the mean
 ]
 
-$$\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}: \max(\lambda_{\mathbf{B}})$$
+$\lambda_{\mathbf{B}}$ denotes the eigenvalues of $\mathbf{B}$
+
+Return from $\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}$ is given by $\max(\lambda_{\mathbf{B}})$
+
 
 ---
 
-# Rate of convergence for multivariate models
+# Aside: Kronecker product $(\otimes)$
 
 .blue-text[
-### Rate of return for the covariance $\mathbf{x}_t$
+### A generalization of the outer product from vectors to matrices
 ]
 
+$$\mathbf{A} = 
+\begin{bmatrix}
+1 & 2 \\
+3 & 4
+\end{bmatrix}
+~~ \text{and} ~~
+\mathbf{B} = 
+\begin{bmatrix}
+5 & 6 \\
+7 & 8
+\end{bmatrix}$$
+<br>
+
+$$\mathbf{A} \otimes \mathbf{B} = \left[\begin{array}{ll}
+1\left[\begin{array}{cc}
+5 & 6 \\
+7 & 8
+\end{array}\right] & 2\left[\begin{array}{ll}
+5 & 6 \\
+7 & 8
+\end{array}\right] \\
+3\left[\begin{array}{cc}
+5 & 6 \\
+7 & 8
+\end{array}\right] & 4\left[\begin{array}{ll}
+5 & 6 \\
+7 & 8
+\end{array}\right]
+\end{array}\right]=\left[\begin{array}{cccc}
+5 & 6 & 10 & 12 \\
+7 & 8 & 14 & 16 \\
+15 & 18 & 20 & 24 \\
+21 & 24 & 28 & 32
+\end{array}\right]$$
+
+
+---
+
+# Rate of return for multivariate models
+
+.blue-text[
+### Rate of return for the covariance matrix
+]
+
+Return from $\boldsymbol{\Sigma}_t \rightarrow \boldsymbol{\Sigma}_{\infty}$ is given by $\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})$
 
 
 ---
