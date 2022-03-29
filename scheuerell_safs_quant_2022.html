@@ -3,6 +3,7 @@
   <head>
     <title>scheuerell_safs_quant_2022.knit</title>
     <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="my-theme.css" type="text/css" />
   </head>
   <body>
@@ -588,7 +589,7 @@ class: center, middle, inverse
 # Let's consider 3 metrics of stability
 
 .blue-text[
-## Rate of convergence
+## Rate of return to equilibrium
 ]
 
 .green-text[
@@ -602,19 +603,44 @@ class: center, middle, inverse
 
 ---
 
+class: frimg
+background-image: url(figs/May_1972_stability.png)
+background-position: 50% 70%
+background-size: 70%
+
+# Rate of return to equilibrium
+
+.blue-text[
+### In deterministic models, equilibria are a point or stable limit cycle
+]
+
+.gray-text.citation[May (1972) _Science_]
+
+
+---
+
+# Rate of return to equilibrium
+
+.blue-text[
+### In stochastic models, the equilibrium is a _stationary distribution_
+]
+
+
+---
+
 # Univariate stationary distribution
 
 .blue-text[
-### When `\(|b| &lt; 1\)`, the equilibrium for an AR(1) process is called&lt;br&gt;the _stationary distribution_
+### When |b| &lt; 1, an AR(1) process is "stationary"
 ]
 
-`$$x_{\infty} \sim \text{N}(\mu_{\infty}, \sigma_{\infty})$$`
-
-.blue-text[
-### with
-]
-
-`$$\mu_{\infty} = \frac{r_{\max}}{1 - b} \\
+`$$x_t = r_{\max} + b x_{t-1} + w_t \\
+~ \\
+\Downarrow \\
+~ \\
+x_{\infty} \sim \text{N}(\mu_{\infty}, \sigma_{\infty}) \\
+~ \\
+\mu_{\infty} = \frac{r_{\max}}{1 - b} \\
 ~ \\
 \sigma_{\infty} = \frac{q}{1 - b^2}$$`
 
@@ -643,7 +669,39 @@ class: center, middle, inverse
 
 # Univariate transition distribution
 
+.blue-text[
+### The _transition distribution_ is the conditional probability distribution for `\(x_t\)` at any time `\(t\)` given `\(x_0\)`
+]
+
+`$$\mu_t = \mu_{\infty} + b^t \left( x_0 - \mu_{\infty} \right)\\
+~ \\
+\sigma_t = \sigma_{\infty}[1 - (b^2)^t]$$`
+
+.orange-text[
+### Note: the rate of convergence is governed by `\(b\)`
+]
+
+
+---
+
+# Univariate transition distribution
+
 &lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_trans_dist-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# A cautious note on rate of return
+
+.blue-text[
+### In deterministic models, rapid return rates make a system more predictable (stable)
+
+### In stochastic models, the rate of return is measured from some known observation
+
+### At `\(t = 0\)` we have full knowledge of the the system, because `\(\sigma_t = \sigma_{\infty}[1 - (b^2)^t] = 0\)`
+
+### Over time `\(\sigma_t \rightarrow \sigma_{\infty}\)`, so information is lost more rapidly if the variance returns more rapidly
+]
 
 
 ---
@@ -657,6 +715,87 @@ class: center, middle, inverse
 .green-text[
 ### The _stationary_ distribution is where we are headed
 ]
+
+
+---
+
+# Rate of return for multivariate models
+
+.blue-text[
+### For multivariate models, the rate of return is governed by the interaction matrix `\(\mathbf{B}\)`
+]
+
+.blue-text[
+### As with deterministic models, it depends on _dominant eigenvalues_
+]
+
+
+---
+
+# Rate of return for multivariate models
+
+.blue-text[
+### Rate of return for the mean
+]
+
+If `\(\lambda_{\mathbf{B}}\)` denotes the eigenvalues of `\(\mathbf{B}\)`
+
+Rate of return from `\(\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}\)` is given by `\(\max(\lambda_{\mathbf{B}})\)`
+
+
+---
+
+# Aside: Kronecker product `\((\otimes)\)`
+
+.blue-text[
+### A generalization of the outer product from vectors to matrices
+]
+
+`$$\mathbf{A} = 
+\begin{bmatrix}
+1 &amp; 2 \\
+3 &amp; 4
+\end{bmatrix}
+~~ \text{and} ~~
+\mathbf{B} = 
+\begin{bmatrix}
+5 &amp; 6 \\
+7 &amp; 8
+\end{bmatrix}$$`
+&lt;br&gt;
+
+`$$\mathbf{A} \otimes \mathbf{B} = \left[\begin{array}{ll}
+1\left[\begin{array}{cc}
+5 &amp; 6 \\
+7 &amp; 8
+\end{array}\right] &amp; 2\left[\begin{array}{ll}
+5 &amp; 6 \\
+7 &amp; 8
+\end{array}\right] \\
+3\left[\begin{array}{cc}
+5 &amp; 6 \\
+7 &amp; 8
+\end{array}\right] &amp; 4\left[\begin{array}{ll}
+5 &amp; 6 \\
+7 &amp; 8
+\end{array}\right]
+\end{array}\right]=\left[\begin{array}{cccc}
+5 &amp; 6 &amp; 10 &amp; 12 \\
+7 &amp; 8 &amp; 14 &amp; 16 \\
+15 &amp; 18 &amp; 20 &amp; 24 \\
+21 &amp; 24 &amp; 28 &amp; 32
+\end{array}\right]$$`
+
+
+---
+
+# Rate of return for multivariate models
+
+.blue-text[
+### Rate of return for the covariance matrix
+]
+
+Return from `\(\boldsymbol{\Sigma}_t \rightarrow \boldsymbol{\Sigma}_{\infty}\)` is given by `\(\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})\)`
 
 
 ---
@@ -701,6 +840,8 @@ class: center, middle, inverse
 
 ## Arni Litt and many others (UW)
 ]
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
