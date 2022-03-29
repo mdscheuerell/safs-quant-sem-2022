@@ -707,7 +707,7 @@ The $p \times 1$ column vector $\mathbf{c}_{t-h}$ contains each of the $p$ covar
 ### The effect(s) of covariates can vary by state/species/etc
 ]
 
-$$\mathbf{C} =
+$$\mathbf{C} \stackrel{?}{=}
 \begin{bmatrix}
 C_{1, Temp} & C_{1, DO} \\ 
 C_{2, Temp} & C_{2, DO} \\ 
@@ -715,7 +715,7 @@ C_{2, Temp} & C_{2, DO} \\
 C_{m, Temp} & C_{m, DO}
 \end{bmatrix}
 ~~ \text{or} ~~
-\mathbf{C} =
+\mathbf{C} \stackrel{?}{=}
 \begin{bmatrix}
 C_{Temp} & C_{DO} \\ 
 C_{Temp} & C_{DO} \\ 
@@ -935,7 +935,6 @@ lines(s2, xx, col = "indianred", lwd = 2)
 .blue-text[
 ### The _transition distribution_ is the conditional probability distribution for $x_t$ at any time $t$ given $x_0$
 ]
- 
 
 $$\mu_t = \mu_{\infty} + b^t \left( x_0 - \mu_{\infty} \right)\\
 ~ \\
@@ -987,6 +986,19 @@ text(x = 25, y = 4, expression(sigma[t]), col = "purple", cex = 1.5)
 mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 
 ```
+
+
+---
+
+# Transition versus stationary
+
+.blue-text[
+### The _transition_ distribution is where we are now
+]
+
+.green-text[
+### The _stationary_ distribution is where we are headed
+]
 
 
 ---

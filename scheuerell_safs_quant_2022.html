@@ -3,7 +3,6 @@
   <head>
     <title>scheuerell_safs_quant_2022.knit</title>
     <meta charset="utf-8" />
-    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="my-theme.css" type="text/css" />
   </head>
   <body>
@@ -482,7 +481,7 @@ The `\(p \times 1\)` column vector `\(\mathbf{c}_{t-h}\)` contains each of the `
 ### The effect(s) of covariates can vary by state/species/etc
 ]
 
-`$$\mathbf{C} =
+`$$\mathbf{C} \stackrel{?}{=}
 \begin{bmatrix}
 C_{1, Temp} &amp; C_{1, DO} \\ 
 C_{2, Temp} &amp; C_{2, DO} \\ 
@@ -490,7 +489,7 @@ C_{2, Temp} &amp; C_{2, DO} \\
 C_{m, Temp} &amp; C_{m, DO}
 \end{bmatrix}
 ~~ \text{or} ~~
-\mathbf{C} =
+\mathbf{C} \stackrel{?}{=}
 \begin{bmatrix}
 C_{Temp} &amp; C_{DO} \\ 
 C_{Temp} &amp; C_{DO} \\ 
@@ -634,7 +633,6 @@ class: center, middle, inverse
 .blue-text[
 ### The _transition distribution_ is the conditional probability distribution for `\(x_t\)` at any time `\(t\)` given `\(x_0\)`
 ]
- 
 
 `$$\mu_t = \mu_{\infty} + b^t \left( x_0 - \mu_{\infty} \right)\\
 ~ \\
@@ -646,6 +644,19 @@ class: center, middle, inverse
 # Univariate transition distribution
 
 &lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_trans_dist-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Transition versus stationary
+
+.blue-text[
+### The _transition_ distribution is where we are now
+]
+
+.green-text[
+### The _stationary_ distribution is where we are headed
+]
 
 
 ---
@@ -690,8 +701,6 @@ class: center, middle, inverse
 
 ## Arni Litt and many others (UW)
 ]
-
-
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
