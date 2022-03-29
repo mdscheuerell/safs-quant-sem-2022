@@ -1032,6 +1032,21 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 
 ---
 
+# A cautious note on rate of return
+
+.blue-text[
+### In deterministic models, rapid return rates make a system more predictable (stable)
+
+### In stochastic models, the rate of return is measured from some known observation
+
+### At $t = 0$ we have full knowledge of the the system, because $\sigma_t = \sigma_{\infty}[1 - (b^2)^t] = 0$
+
+### Over time $\sigma_t \rightarrow \sigma_{\infty}$, so information is lost more rapidly if the variance returns more rapidly
+]
+
+
+---
+
 # Transition versus stationary
 
 .blue-text[
@@ -1048,7 +1063,7 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 # Rate of return for multivariate models
 
 .blue-text[
-### For multivariate models, convergence is governed by the interaction matrix $\mathbf{B}$
+### For multivariate models, the rate of return is governed by the interaction matrix $\mathbf{B}$
 ]
 
 .blue-text[
@@ -1064,9 +1079,9 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 ### Rate of return for the mean
 ]
 
-$\lambda_{\mathbf{B}}$ denotes the eigenvalues of $\mathbf{B}$
+If $\lambda_{\mathbf{B}}$ denotes the eigenvalues of $\mathbf{B}$
 
-Return from $\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}$ is given by $\max(\lambda_{\mathbf{B}})$
+Rate of return from $\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}$ is given by $\max(\lambda_{\mathbf{B}})$
 
 
 ---
