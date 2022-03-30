@@ -1625,6 +1625,21 @@ $$\begin{align}
 
 ---
 
+# Sensitivity of $\pi_{\mathbf{B}}$ to interactions
+
+.blue-text[
+### In many cases, we are interested in the change in $\pi_{\mathbf{B}}$ with respect to the $(i,j)$ element of $\mathbf{B}$, which is given by
+]
+
+$$\begin{align}
+\left[ \frac{\partial \pi_\mathbf{B}}{\partial \mathbf{B}} \right]_{ij} &= \left[ \frac{\partial \text{det}(\mathbf{B})^2}{\partial \mathbf{B}} \right]_{ij} \\
+& \\
+ &= \left[ 2 ~ \text{det}(\mathbf{B})^2 (\mathbf{B}^{-1})^\top \right]_{ij}
+\end{align}$$
+
+
+---
+
 class: center, middle, inverse
 
 # How does one actually do this?
@@ -1651,7 +1666,7 @@ class: center, middle, inverse
 
 class: center, middle, inverse
 
-# Real-world example
+# The Lake Washington Story
 
 
 ---
@@ -1663,7 +1678,31 @@ class: center, middle, inverse
 
 ## Daniel Schindler (UW)
 
-## Arni Litt and many others (UW)
+## Arni Litt, Sally Abella, and **many** others (UW)
 ]
+
+
+---
+
+class: frimg
+
+background-image: url(figs/LWA_press.png)
+background-size: 70%
+background-position: 50% 60%
+
+# The Lake Washington Story
+
+
+---
+
+class: frimg
+
+background-image: url(figs/LWA_CW.png)
+background-size: 80%
+background-position: 50% 50%
+
+# The Lake Washington Story
+
+.citation.gray-text[Hampton, Scheuerell & Schindler (2006) _L&O_]
 
 
