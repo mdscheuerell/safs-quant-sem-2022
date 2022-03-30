@@ -1084,6 +1084,8 @@ If $\lambda_{\mathbf{B}}$ denotes the eigenvalues of $\mathbf{B}$, then the rate
 
 $$\max(\lambda_{\mathbf{B}})$$
 
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
 
 ---
 
@@ -1140,6 +1142,8 @@ $$\mathbf{A} \otimes \mathbf{B} = \left[\begin{array}{ll}
 Return from $\boldsymbol{\Sigma}_t \rightarrow \boldsymbol{\Sigma}_{\infty}$ is given by
 
 $$\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})$$
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
 
 
 ---
@@ -1219,6 +1223,7 @@ $$\begin{align}
 \end{align}$$
 
 
+
 ---
 
 # Reactivity
@@ -1239,6 +1244,8 @@ $$\begin{align}
 $$\frac{\sqrt{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}}{\sqrt{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}} =
 \sqrt{\frac{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}}$$
 
+.citation-gray-text[Neubert et al (2009) _Ecology_]
+
 
 ---
 
@@ -1253,6 +1260,8 @@ $$\begin{align}
 ~ \\
     &= \log \sigma_{\max} (\mathbf{B})
 \end{align}$$
+
+.citation-gray-text[Neubert et al (2009) _Ecology_]
 
 
 ---
@@ -1272,6 +1281,8 @@ $$\begin{align}
 .orange-text[
 ### When $\nu$ > 0, the system is considered "reactive"
 ]
+
+.citation-gray-text[Neubert et al (2009) _Ecology_]
 
 
 ---
@@ -1343,6 +1354,8 @@ $$\text{Var} (\mathbf{x}_t) = \text{Var} (\mathbf{r}) + \mathbf{B} \text{Var} (\
 \Downarrow \\
 \mathbf{\Sigma_{\infty}} = \mathbf{B} \mathbf{\Sigma_{\infty}} \mathbf{B}^\top + \mathbf{Q}$$
 
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
 
 ---
 
@@ -1366,6 +1379,8 @@ $$\text{Var} (\mathbf{x}_t) = \text{Var} (\mathbf{r}) + \mathbf{B} \text{Var} (\
 .orange-text[
 ### Unfortunately, there is no closed form solution for $\mathbf{\Sigma_{\infty}}$
 ]
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
 
 
 ---
@@ -1414,6 +1429,8 @@ $\tilde{\mathbf{B}} = \mathbf{B} \otimes \mathbf{B}$
 ]
 
 $$\text{vec}(\boldsymbol{\Sigma}) = (\tilde{\mathbf{I}} - \tilde{\mathbf{B}})^{-1} \text{vec}(\mathbf{Q})$$
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
 
 
 ---
@@ -1621,6 +1638,8 @@ $$\begin{align}
 \end{align} \\
 \Downarrow \\
 \pi_\mathbf{B}  = \frac{\text{det}(\mathbf{\Sigma} - \mathbf{Q})}{\text{det}(\mathbf{\Sigma})} = \text{det}(\mathbf{B})^2$$
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
 
 
 ---

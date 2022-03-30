@@ -3,10 +3,12 @@
   <head>
     <title>scheuerell_safs_quant_2022.knit</title>
     <meta charset="utf-8" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="my-theme.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
+
 
 
 
@@ -101,14 +103,14 @@ background-size: 70%
 
 # Example of Gompertz dynamics
 
-&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz-1.png" width="100%" height="100%" /&gt;
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 
 ---
 
 # Example of Gompertz dynamics
 
-&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz_2-1.png" width="100%" height="100%" /&gt;
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz_2-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -142,7 +144,7 @@ w_t \sim \text{N}(0,q)$$`
 
 # Example of stochastic Gompertz dynamics
 
-&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz_stoch-1.png" width="100%" height="100%" /&gt;
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_gompertz_stoch-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -230,7 +232,7 @@ class: middle
 
 # Environmental effects on dynamics
 
-&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_covar, -1.png" width="100%" height="100%" /&gt;
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_covar-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -309,7 +311,7 @@ y_t = x_t + v_t$$`
 
 # Example states and observations
 
-&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_ssm-1.png" width="100%" height="100%" /&gt;
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_ssm-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -741,6 +743,8 @@ If `\(\lambda_{\mathbf{B}}\)` denotes the eigenvalues of `\(\mathbf{B}\)`, then 
 
 `$$\max(\lambda_{\mathbf{B}})$$`
 
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
 
 ---
 
@@ -798,6 +802,19 @@ Return from `\(\boldsymbol{\Sigma}_t \rightarrow \boldsymbol{\Sigma}_{\infty}\)`
 
 `$$\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})$$`
 
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
+
+---
+
+# A note about rate of return
+
+.blue-text[
+### Rate of return is based upon long-term properties of the system
+
+### For many applications, properties of short-term behavior might be more appropriate (Neubert &amp; Caswell 1997)
+]
+
 
 ---
 
@@ -810,11 +827,409 @@ Return from `\(\boldsymbol{\Sigma}_t \rightarrow \boldsymbol{\Sigma}_{\infty}\)`
 
 ---
 
+# Example of reactivity
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/ex_reactivity-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### Consider a small perturbation to `\(\mathbf{x}_{t-1}\)` by the vector `\(\boldsymbol{\delta}\)`, given by
+]
+
+`$$\begin{align}
+\mathbf{x}_t &amp;= \mathbf{r} + \mathbf{B} \left( \mathbf{x}_{t-1} + \boldsymbol{\delta} \right) + \mathbf{w}_t \\
+  &amp;= \mathbf{r} + \mathbf{B} \mathbf{x}_{t-1} + \mathbf{B} \boldsymbol{\delta} + \mathbf{w}_t
+\end{align}$$`
+
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### Consider a small perturbation to `\(\mathbf{x}_{t-1}\)` by the vector `\(\boldsymbol{\delta}\)`, given by
+]
+
+`$$\begin{align}
+\mathbf{x}_t &amp;= \mathbf{r} + \mathbf{B} \left( \mathbf{x}_{t-1} + \boldsymbol{\delta} \right) + \mathbf{w}_t \\
+  &amp;= \mathbf{r} + \mathbf{B} \mathbf{x}_{t-1} + \mathbf{B} \boldsymbol{\delta} + \mathbf{w}_t
+\end{align}$$`
+
+.blue-text[
+### The magnitude of the response of `\(\mathbf{x}_t\)` given by `\(\mathbf{B} \boldsymbol{\delta}\)` relative to the magnitude of the displacement is
+]
+
+`$$\frac{\sqrt{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}}{\sqrt{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}} =
+\sqrt{\frac{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}}$$`
+
+.citation-gray-text[Neubert et al (2009) _Ecology_]
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### The reactivity `\((\nu)\)` is then given by
+]
+
+`$$\begin{align}
+\nu &amp;= \log \sigma_{\max} \sqrt{\frac{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}} \\
+~ \\
+    &amp;= \log \sigma_{\max} (\mathbf{B})
+\end{align}$$`
+
+.citation-gray-text[Neubert et al (2009) _Ecology_]
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### The reactivity `\((\nu)\)` is then given by
+]
+
+`$$\begin{align}
+\nu &amp;= \log \sigma_{\max} \sqrt{\frac{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}} \\
+~ \\
+    &amp;= \log \sigma_{\max} (\mathbf{B})
+\end{align}$$`
+
+.orange-text[
+### When `\(\nu\)` &gt; 0, the system is considered "reactive"
+]
+
+.citation-gray-text[Neubert et al (2009) _Ecology_]
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### Equivalently, the reactivity `\((\nu)\)` is also given by
+]
+
+`$$\begin{align}
+\nu &amp;= \log \sigma_{\max} (\mathbf{B}) \\
+~ \\
+    &amp;= \log ||\mathbf{B}||_2 \\
+~ \\
+    &amp;= \log \sqrt{\lambda_{\max}(\mathbf{B}^\top \mathbf{B})}
+\end{align}$$`
+
+
+---
+
 # Variance of the stationary distribution
 
 .blue-text[
-### The effect of combined species interactions relative to environmental (process) noise
+### In a relatively stable system, species interactions increase the variance of the stationary distribution only slightly compared to the variance of the process errors
+
+### In a less stable system, species interactions greatly amplify the variance in the stationary distribution relative to the variance of the process errors
 ]
+
+---
+
+# Variance of the stationary distribution
+
+.blue-text[
+### Let's revisit a stationary univariate case with one species
+]
+
+`$$x_t = r_{\max} + b x_{t-1} + w_t \\
+w_t \sim \text{N}(0, q)$$`
+
+.blue-text[
+### The stationary variance is 
+]
+
+`$$\text{Var} (x_t) = \text{Var} (r_{\max}) + b^2 \text{Var} (x_{t-1}) + \text{Var} (w_t) \\
+\Downarrow \\
+\begin{align}
+\sigma_{\infty} &amp;= b^2 \sigma_{\infty} + q \\
+  &amp;= \frac{q}{1 - b^2}
+\end{align}$$`
+
+
+---
+
+# Variance of the stationary distribution
+
+.blue-text[
+### Let's now consider our multivariate model of community dynamics
+]
+
+`$$\mathbf{x}_t = \mathbf{r} +  \mathbf{B} \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{w}_t \sim \text{MVN}(\mathbf{0}, \mathbf{Q})$$`
+
+.blue-text[
+### The stationary variance is 
+]
+
+`$$\text{Var} (\mathbf{x}_t) = \text{Var} (\mathbf{r}) + \mathbf{B} \text{Var} (\mathbf{x}_{t-1}) \mathbf{B}^{\top} + \text{Var} (\mathbf{w}_t) \\
+\Downarrow \\
+\mathbf{\Sigma_{\infty}} = \mathbf{B} \mathbf{\Sigma_{\infty}} \mathbf{B}^\top + \mathbf{Q}$$`
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
+
+---
+
+# Variance of the stationary distribution
+
+.blue-text[
+### Let's now consider our multivariate model of community dynamics
+]
+
+`$$\mathbf{x}_t = \mathbf{r} +  \mathbf{B} \mathbf{x}_{t-1} + \mathbf{w}_t \\
+\mathbf{w}_t \sim \text{MVN}(\mathbf{0}, \mathbf{Q})$$`
+
+.blue-text[
+### The stationary variance is 
+]
+
+`$$\text{Var} (\mathbf{x}_t) = \text{Var} (\mathbf{r}) + \mathbf{B} \text{Var} (\mathbf{x}_{t-1}) \mathbf{B}^{\top} + \text{Var} (\mathbf{w}_t) \\
+\Downarrow \\
+\mathbf{\Sigma_{\infty}} = \mathbf{B} \mathbf{\Sigma_{\infty}} \mathbf{B}^\top + \mathbf{Q}$$`
+
+.orange-text[
+### Unfortunately, there is no closed form solution for `\(\mathbf{\Sigma_{\infty}}\)`
+]
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
+
+---
+
+# Aside: the `\(\text{vec}\)` operator
+
+.blue-text[
+### For example, if
+]
+
+`$$\mathbf{M} = 
+\begin{bmatrix}
+    1 &amp; 3 \\
+    2 &amp; 4
+\end{bmatrix}$$`
+
+.blue-text[
+### then
+]
+
+`$$\text{vec}(\mathbf{M}) = 
+\begin{bmatrix}
+    1 \\
+    2 \\
+    3 \\
+    4 
+\end{bmatrix}$$`
+
+
+---
+
+# Variance of the stationary distribution
+
+.blue-text[
+### If we define the following
+]
+
+`\(\mathbf{I} = n \times n\)` identity matrix
+
+`\(\tilde{\mathbf{I}} = \mathbf{I} \otimes \mathbf{I}\)`
+
+`\(\tilde{\mathbf{B}} = \mathbf{B} \otimes \mathbf{B}\)`
+
+.blue-text[
+### then
+]
+
+`$$\text{vec}(\boldsymbol{\Sigma}) = (\tilde{\mathbf{I}} - \tilde{\mathbf{B}})^{-1} \text{vec}(\mathbf{Q})$$`
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
+
+---
+
+# Effect of species interactions
+
+.blue-text[
+### Beginning with the stationary variance for our univariate model, let's consider the proportion `\(\pi\)` owing to density dependence
+]
+
+`$$\sigma_{\infty} = \frac{q}{1 - b^2} \\
+\Downarrow \\
+\begin{align}\sigma_{\infty} - b^2 \sigma_{\infty} &amp;= q \\
+\sigma_{\infty} &amp;= b^2 \sigma_{\infty} + q \\
+\sigma_{\infty} - q  &amp;= b^2 \sigma_{\infty}
+\end{align} \\
+\Downarrow \\
+\pi = \frac{\sigma_{\infty} - q}{\sigma_{\infty}} = b^2$$`
+
+
+---
+
+# Effect of species interactions
+
+.blue-text[
+### The multivariate case is analogous, but requires some additional math
+
+### Specifically, the size of a scalar is just the value itself, but we need a way to measure the "volume" of the matrices
+]
+
+
+---
+
+# Aside: matrix determinants
+
+.blue-text[
+### Consider a cube with each side equal to 2 units; it's volume is 8 units&lt;sup&gt;3&lt;/sup&gt;
+]
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/plot_cube-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Aside: matrix determinants
+
+.blue-text[
+### We can also define this cube with 3 vectors for the cube's vertices
+]
+
+&lt;img src="scheuerell_safs_quant_2022_files/figure-html/plot_cube_2-1.png" width="100%" height="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+# Aside: matrix determinants
+
+.blue-text[
+### If we combine the 3 vectors into a matrix, the determinant gives the volume
+]
+
+`$$\begin{bmatrix}
+2 &amp; 0 &amp; 0 \\
+0 &amp; 2 &amp; 0 \\
+0 &amp; 0 &amp; 2
+\end{bmatrix}$$`
+
+
+---
+
+# Aside: matrix determinants
+
+.blue-text[
+### For a 2 `\(\times\)` 2 matrix
+]
+
+`$$\text{det} \begin{bmatrix}
+a &amp; b \\
+c &amp; d
+\end{bmatrix}
+= ad - bc$$`
+
+.blue-text[
+### For a 3 `\(\times\)` 3 matrix
+]
+
+`$$\begin{align}
+\text{det} \begin{bmatrix}
+a &amp; b &amp; c \\
+d &amp; e &amp; f \\
+g &amp; h &amp; i
+\end{bmatrix} &amp;= a ~ \text{det} \begin{bmatrix}
+e &amp; f \\
+h &amp; i
+\end{bmatrix} -b ~ \text{det} \begin{bmatrix}
+d &amp; f \\
+g &amp; i
+\end{bmatrix} +c ~ \text{det} \begin{bmatrix}
+d &amp; e \\
+g &amp; h
+\end{bmatrix} \\
+&amp;= a (e i - f h) - b (d i - f g) + c (d h - e g)
+\end{align}$$`
+
+
+---
+
+# Aside: matrix determinants
+
+.blue-text[
+### The volume of our cube is given by
+]
+
+`$$\begin{align}
+\text{det}
+\begin{bmatrix}
+2 &amp; 0 &amp; 0 \\
+0 &amp; 2 &amp; 0 \\
+0 &amp; 0 &amp; 2
+\end{bmatrix} 
+  &amp;= 2[2 (2) - 0 (0)] - 0[0 (0) - 0 (2)] + 0[0 (0) - 2 (0)] \\
+  &amp;= 2(4 - 0) - 0(0 - 0) + 0(0 - 0) \\
+  &amp;= 8
+\end{align}$$`
+
+
+---
+
+# Effect of species interactions
+
+.blue-text[
+### Recall that the stationary variance of the MAR(1) model is 
+]
+
+`$$\boldsymbol{\Sigma} = \mathbf{B} \boldsymbol{\Sigma} \mathbf{B}^\top + \mathbf{Q}$$`
+
+.blue-text[
+### and so the volume of the difference `\(\boldsymbol{\Sigma} - \mathbf{Q}\)` is the contribution of species interactions to the stationary variance
+]
+
+`$$\boldsymbol{\Sigma} - \mathbf{Q} = \mathbf{B} \boldsymbol{\Sigma} \mathbf{B}^\top$$`
+
+
+---
+
+# Effect of species interactions
+
+.blue-text[
+### The proportion of the volume of `\(\boldsymbol{\Sigma}\)` attributable to species interactions, `\(\pi_{\mathbf{B}}\)`, is then
+]
+
+`$$\begin{align}
+\text{det}(\mathbf{\Sigma} - \mathbf{Q}) &amp;= \text{det}(\mathbf{B} \mathbf{\Sigma} \mathbf{B}^\top) \\
+ &amp;= \text{det}(\mathbf{B}) \text{det}(\mathbf{\Sigma}) \text{det}(\mathbf{B}^\top) \\
+ &amp;= \text{det}(\mathbf{B}) \text{det}(\mathbf{\Sigma}) \text{det}(\mathbf{B}) \\
+ &amp;= \text{det}(\mathbf{B})^2 \text{det}(\mathbf{\Sigma})
+\end{align} \\
+\Downarrow \\
+\pi_\mathbf{B}  = \frac{\text{det}(\mathbf{\Sigma} - \mathbf{Q})}{\text{det}(\mathbf{\Sigma})} = \text{det}(\mathbf{B})^2$$`
+
+.citation-gray-text[Ives et al (2003) _Ecology_]
+
+
+---
+
+# Sensitivity of `\(\pi_{\mathbf{B}}\)` to interactions
+
+.blue-text[
+### In many cases, we are interested in the change in `\(\pi_{\mathbf{B}}\)` with respect to the `\((i,j)\)` element of `\(\mathbf{B}\)`, which is given by
+]
+
+`$$\begin{align}
+\left[ \frac{\partial \pi_\mathbf{B}}{\partial \mathbf{B}} \right]_{ij} &amp;= \left[ \frac{\partial \text{det}(\mathbf{B})^2}{\partial \mathbf{B}} \right]_{ij} \\
+&amp; \\
+ &amp;= \left[ 2 ~ \text{det}(\mathbf{B})^2 (\mathbf{B}^{-1})^\top \right]_{ij}
+\end{align}$$`
 
 
 ---
@@ -845,7 +1260,7 @@ class: center, middle, inverse
 
 class: center, middle, inverse
 
-# Real-world example
+# The Lake Washington Story
 
 
 ---
@@ -857,8 +1272,34 @@ class: center, middle, inverse
 
 ## Daniel Schindler (UW)
 
-## Arni Litt and many others (UW)
+## Arni Litt, Sally Abella, and **many** others (UW)
 ]
+
+
+---
+
+class: frimg
+
+background-image: url(figs/LWA_press.png)
+background-size: 70%
+background-position: 50% 60%
+
+# The Lake Washington Story
+
+
+---
+
+class: frimg
+
+background-image: url(figs/LWA_CW.png)
+background-size: 80%
+background-position: 50% 50%
+
+# The Lake Washington Story
+
+.citation.gray-text[Hampton, Scheuerell &amp; Schindler (2006) _L&amp;O_]
+
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
