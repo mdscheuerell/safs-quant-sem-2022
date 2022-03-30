@@ -1143,6 +1143,17 @@ $$\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})$$
 
 ---
 
+# A note about rate of return
+
+.blue-text[
+### Rate of return is based upon long-term properties of the system
+
+### For many applications, properties of short-term behavior might be more appropriate (Neubert & Caswell 1997)
+]
+
+
+---
+
 # Reactivity
 
 .blue-text[
@@ -1152,10 +1163,54 @@ $$\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})$$
 
 ---
 
+# Example of reactivity
+
+```{r ex_reactivity, align.fig="center", fig.dim=c(7,4)}
+
+
+x1 <- MASS::mvrnorm(10, rep(0, 2), matrix(c(1.5, 0, 0, 1.5), 2, 2))
+x2 <- x1 * 0.4
+
+y1 <- MASS::mvrnorm(10, rep(0, 2), matrix(c(3, 0, 0, 3), 2, 2))
+y2 <- y1 * 0.7
+
+lims <- c(-1, 1) * max(abs(c(x1, y1)))
+
+par(mfrow = c(1,2),
+    mai = c(0.9, 0.9, 0.5, 0.1),
+    omi = c(0, 0, 0, 0))
+plot(x1, type = "n",
+     # xlim = range(c(x1, y1)), ylim = range(c(x1, y1)),
+     xlim = lims, ylim = lims,
+xlab = "", ylab = "",
+     xaxt = "n", yaxt = "n")
+abline(h = 0, col = "darkgray")
+abline(v = 0, col = "darkgray")
+arrows(x1[,1], x1[,2], x2[,1], x2[,2],
+       length = 0.05, lwd = 2, col = "dodgerblue")
+mtext("Species 1", side = 1, line = 1, cex = 1.2)
+mtext("Species 2", side = 2, line = 1, cex = 1.2)
+mtext("Less reactive", side = 3, line = 1, cex = 1.2)
+plot(x2, type = "n",
+     xlim = lims, ylim = lims,
+     xlab = "", ylab = "",
+     xaxt = "n", yaxt = "n")  
+abline(h = 0, col = "darkgray")
+abline(v = 0, col = "darkgray")
+arrows(y1[,1], y1[,2], y2[,1], y2[,2],
+       length = 0.05, lwd = 2, col = "indianred")
+mtext("Species 1", side = 1, line = 1, cex = 1.2)
+mtext("Species 2", side = 2, line = 1, cex = 1.2)
+mtext("More reactive", side = 3, line = 1, cex = 1.2)
+```
+
+
+---
+
 # Variance of the stationary distribution
 
 .blue-text[
-### The effect of combined species interactions relative to environmental (process) noise
+### The combined effects of species interactions relative to environmental (process) noise
 ]
 
 
