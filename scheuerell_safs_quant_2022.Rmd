@@ -1413,7 +1413,7 @@ $\tilde{\mathbf{B}} = \mathbf{B} \otimes \mathbf{B}$
 ### then
 ]
 
-$$\text{vec}(\mathbf{\Sigma}) = (\tilde{\mathbf{I}} - \tilde{\mathbf{B}})^{-1} \text{vec}(\mathbf{Q})$$
+$$\text{vec}(\boldsymbol{\Sigma}) = (\tilde{\mathbf{I}} - \tilde{\mathbf{B}})^{-1} \text{vec}(\mathbf{Q})$$
 
 
 ---
@@ -1436,7 +1436,7 @@ $$\sigma_{\infty} = \frac{q}{1 - b^2} \\
 
 ---
 
-# Variance of the stationary distribution
+# Effect of species interactions
 
 .blue-text[
 ### The multivariate case is analogous, but requires some additional math
@@ -1582,10 +1582,45 @@ $$\begin{align}
 0 & 2 & 0 \\
 0 & 0 & 2
 \end{bmatrix} 
-  &= 2(2 \cdot 2 - 0 \cdot 0) - 0(0 \cdot 0 - 0 \cdot 2) + 0(0 \cdot 0 - 2 \cdot 0) \\
+  &= 2[2 (2) - 0 (0)] - 0[0 (0) - 0 (2)] + 0[0 (0) - 2 (0)] \\
   &= 2(4 - 0) - 0(0 - 0) + 0(0 - 0) \\
   &= 8
 \end{align}$$
+
+
+---
+
+# Effect of species interactions
+
+.blue-text[
+### Recall that the stationary variance of the MAR(1) model is 
+]
+
+$$\boldsymbol{\Sigma} = \mathbf{B} \boldsymbol{\Sigma} \mathbf{B}^\top + \mathbf{Q}$$
+
+.blue-text[
+### and so the volume of the difference $\boldsymbol{\Sigma} - \mathbf{Q}$ is the contribution of species interactions to the stationary variance
+]
+
+$$\boldsymbol{\Sigma} - \mathbf{Q} = \mathbf{B} \boldsymbol{\Sigma} \mathbf{B}^\top$$
+
+
+---
+
+# Effect of species interactions
+
+.blue-text[
+### The proportion of the volume of $\boldsymbol{\Sigma}$ attributable to species interactions, $\pi_{\mathbf{B}}$, is then
+]
+
+$$\begin{align}
+\text{det}(\mathbf{\Sigma} - \mathbf{Q}) &= \text{det}(\mathbf{B} \mathbf{\Sigma} \mathbf{B}^\top) \\
+ &= \text{det}(\mathbf{B}) \text{det}(\mathbf{\Sigma}) \text{det}(\mathbf{B}^\top) \\
+ &= \text{det}(\mathbf{B}) \text{det}(\mathbf{\Sigma}) \text{det}(\mathbf{B}) \\
+ &= \text{det}(\mathbf{B})^2 \text{det}(\mathbf{\Sigma})
+\end{align} \\
+\Downarrow \\
+\pi_\mathbf{B}  = \frac{\text{det}(\mathbf{\Sigma} - \mathbf{Q})}{\text{det}(\mathbf{\Sigma})} = \text{det}(\mathbf{B})^2$$
 
 
 ---
