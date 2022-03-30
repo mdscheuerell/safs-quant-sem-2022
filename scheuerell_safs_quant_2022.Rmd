@@ -1079,9 +1079,9 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 ### Rate of return for the mean
 ]
 
-If $\lambda_{\mathbf{B}}$ denotes the eigenvalues of $\mathbf{B}$
+If $\lambda_{\mathbf{B}}$ denotes the eigenvalues of $\mathbf{B}$, then the rate of return from $\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}$ is given by
 
-Rate of return from $\boldsymbol{\mu}_t \rightarrow \boldsymbol{\mu}_{\infty}$ is given by $\max(\lambda_{\mathbf{B}})$
+$$\max(\lambda_{\mathbf{B}})$$
 
 
 ---
@@ -1136,7 +1136,27 @@ $$\mathbf{A} \otimes \mathbf{B} = \left[\begin{array}{ll}
 ### Rate of return for the covariance matrix
 ]
 
-Return from $\boldsymbol{\Sigma}_t \rightarrow \boldsymbol{\Sigma}_{\infty}$ is given by $\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})$
+Return from $\boldsymbol{\Sigma}_t \rightarrow \boldsymbol{\Sigma}_{\infty}$ is given by
+
+$$\max(\lambda_{\mathbf{B} \otimes \mathbf{B}})$$
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### The displacement of the community away from equilibrium following a perturbation
+]
+
+
+---
+
+# Variance of the stationary distribution
+
+.blue-text[
+### The effect of combined species interactions relative to environmental (process) noise
+]
 
 
 ---
