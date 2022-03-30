@@ -1296,8 +1296,48 @@ $$\begin{align}
 # Variance of the stationary distribution
 
 .blue-text[
-### The combined effects of species interactions relative to environmental (process) noise
+### In a relatively stable system, species interactions increase the variance of the stationary distribution only slightly compared to the variance of the process errors
+
+### In a less stable system, species interactions greatly amplify the variance in the stationary distribution relative to the variance of the process errors
 ]
+
+---
+
+# Variance of the stationary distribution
+
+.blue-text[
+### Let's revisit a stationary univariate case with one species
+]
+
+$$x_t = r_{\max} + b x_{t-1} + w_t \\
+w_t \sim \text{N}(0, q)$$
+
+.blue-text[
+### The stationary variance is 
+]
+
+$$\text{Var} (x_t) = \text{Var} (r_{\max}) + b^2 \text{Var} (x_{t-1}) + \text{Var} (w_t) \\
+\Downarrow \\
+\begin{align}
+\sigma_{\infty} &= b^2 \sigma_{\infty} + q \\
+  &= \frac{q}{1 - b^2}
+\end{align}$$
+
+
+---
+
+# Variance of the stationary distribution
+
+.blue-text[
+### Now let's consider the proportion $\pi$ of the stationary variance owing to species interactions
+]
+
+$$\begin{align}
+\sigma_{\infty} &= b^2 \sigma_{\infty} + q \\
+\sigma_{\infty} - q  &= b^2 \sigma_{\infty}
+\end{align} \\
+\Downarrow \\
+\pi = \frac{\sigma_{\infty} - q}{\sigma_{\infty}} = b^2$$
 
 
 ---
