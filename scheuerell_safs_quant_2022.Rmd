@@ -1210,7 +1210,21 @@ mtext("More reactive", side = 3, line = 1, cex = 1.2)
 # Reactivity
 
 .blue-text[
-### Consider a small perturbation to $\mathbf{x}_{t-1}$ by the vector $\boldsymbol{\delta}$, which we can write as
+### Consider a small perturbation to $\mathbf{x}_{t-1}$ by the vector $\boldsymbol{\delta}$, given by
+]
+
+$$\begin{align}
+\mathbf{x}_t &= \mathbf{r} + \mathbf{B} \left( \mathbf{x}_{t-1} + \boldsymbol{\delta} \right) + \mathbf{w}_t \\
+  &= \mathbf{r} + \mathbf{B} \mathbf{x}_{t-1} + \mathbf{B} \boldsymbol{\delta} + \mathbf{w}_t
+\end{align}$$
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### Consider a small perturbation to $\mathbf{x}_{t-1}$ by the vector $\boldsymbol{\delta}$, given by
 ]
 
 $$\begin{align}
@@ -1224,6 +1238,21 @@ $$\begin{align}
 
 $$\frac{\sqrt{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}}{\sqrt{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}} =
 \sqrt{\frac{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}}$$
+
+
+---
+
+# Reactivity
+
+.blue-text[
+### The reactivity $(\nu)$ is then given by
+]
+
+$$\begin{align}
+\nu &= \log \sigma_{\max} \sqrt{\frac{\boldsymbol{\delta}^{\top} \mathbf{B}^{\top} \mathbf{B} \boldsymbol{\delta}}{\boldsymbol{\delta}^{\top} \boldsymbol{\delta}}} \\
+~ \\
+    &= \log \sigma_{\max} (\mathbf{B})
+\end{align}$$
 
 
 ---
@@ -1260,6 +1289,7 @@ $$\begin{align}
 ~ \\
     &= \log \sqrt{\lambda_{\max}(\mathbf{B}^\top \mathbf{B})}
 \end{align}$$
+
 
 ---
 
