@@ -1747,3 +1747,14 @@ background-position: 50% 50%
 .gray-text.citation[Hampton, Scheuerell & Schindler (2006) _L&O_]
 
 
+---
+
+# Summary
+
+
+
+.futnote.purple-text[`r icon_style(fontawesome("envelope"), fill = "#844870")` scheuerl@uw.edu]
+
+.citation.blue-text[`r icon_style(fontawesome("twitter"), fill = "#488fdf")` @mark_scheuerell]
+
+
