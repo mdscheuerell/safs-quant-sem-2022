@@ -1644,16 +1644,38 @@ $$\begin{align}
 
 ---
 
+# Where are the important interactions?
+
+.blue-text[
+### Reactivity tells us something about the community as a whole
+
+### But what about the importance of _particular interactions_?
+]
+
+
+---
+
+# Where are the important interactions?
+
+.blue-text[
+### Are intra- or inter-specific interactions more important to stability?
+
+### Are top-down or bottom-up interactions more important to stability?
+]
+
+
+---
+
 # Sensitivity of $\pi_{\mathbf{B}}$ to interactions
 
 .blue-text[
-### In many cases, we are interested in the change in $\pi_{\mathbf{B}}$ with respect to the $(i,j)$ element of $\mathbf{B}$, which is given by
+### We can examine the change in $\pi_{\mathbf{B}}$ with respect to the $(i,j)$ element of $\mathbf{B}$ using
 ]
 
 $$\begin{align}
-\left[ \frac{\partial \pi_\mathbf{B}}{\partial \mathbf{B}} \right]_{ij} &= \left[ \frac{\partial \text{det}(\mathbf{B})^2}{\partial \mathbf{B}} \right]_{ij} \\
+\frac{\partial \pi_\mathbf{B}}{\partial \mathbf{B}_{ij}} &=  \frac{\partial \text{det}(\mathbf{B})^2}{\partial \mathbf{B}_{ij}} \\
 & \\
- &= \left[ 2 ~ \text{det}(\mathbf{B})^2 (\mathbf{B}^{-1})^\top \right]_{ij}
+ &= \left[ 2 ~ \text{det}(\mathbf{B}) (\mathbf{B}^{-1})^\top \right]_{ij}
 \end{align}$$
 
 
