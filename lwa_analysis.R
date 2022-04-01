@@ -21,6 +21,7 @@ LL <- function(B, C) {
   return(ll)
 }
 
+
 LL(BB, CC)
 
 data(package = "MARSS")
@@ -60,5 +61,59 @@ covars <- lwa %>%
   select(c("Temp", "TP"))
 
 plank <- lwa %>%
-  select(-c("Year", "Month", "Temp", "TP", "pH"))
+  select(-c("Year", "Month", "Temp", "TP", "pH", "Unicells", "Other.algae", "Neomysis")) %>%
+  t() %>%
+  zscore(mean.only = TRUE)
+
+nn <- nrow(plank)
+
+CC <- matrix(list(0), nrow = ncol(plank), ncol = 2)
+CC[,1] <- colnames(plank)
+CC[c(1, 2, 3, 4),2] <- colnames(plank)[c(1, 2, 3, 4)]
+CC
+
+## rownames(plank)
+# [1,] "1"  "Cryptomonas"            
+# [2,] "2"  "Diatoms"                
+# [3,] "3"  "Greens"                 
+# [4,] "4"  "Bluegreens"             
+# [5,] "5"  "Conochilus"             
+# [6,] "6"  "Cyclops"                
+# [7,] "7"  "Daphnia"                
+# [8,] "8"  "Diaptomus"              
+# [9,] "9"  "Epischura"              
+# [10,] "10" "Leptodora"              
+# [11,] "11" "Non.daphnid.cladocerans"
+# [12,] "12" "Non.colonial.rotifers" 
+
+BB <- matrix(list(0), nn, nn)
+for(rr in 1:nn) {
+  for(cc in 1:nn) {
+    BB[rr, cc] <- paste(rr, cc, sep = ",")
+  }
+}
+BB[seq(4), seq(9,10)] <- BB[seq(9,10), seq(4)] <- 0
+BB
+
+model_list <- list(
+  B = BB,
+  U = "zero",
+  Q = "diagonal and unequal",
+  C = "unconstrained",
+  c = t(covars),
+  Z = "identity",
+  A = "zero",
+  R = "diagonal and equal"
+)
+
+control_list <- list(
+  maxit = 5000
+)
+
+
+lwa_fit <- MARSS(plank, model = model_list, control = control_list, method = "BFGS")
+
+
+
+
 
