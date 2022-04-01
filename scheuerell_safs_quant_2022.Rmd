@@ -1734,6 +1734,33 @@ background-position: 50% 50%
 
 ---
 
+# Analysis: plankton groups
+
+.blue-text[
+### Small phytoplankton 
+
+### Large phytoplankton
+
+### _Daphnia_
+
+### non-_Daphnia_
+]
+
+
+
+---
+
+class: frimg
+
+background-image: url(figs/covars.png)
+background-size: 90%
+background-position: 50% 50%
+
+# The covariates
+
+
+---
+
 # Summary
 
 .blue-text[
