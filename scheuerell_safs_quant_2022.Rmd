@@ -1737,15 +1737,39 @@ background-position: 50% 50%
 # Analysis: plankton groups
 
 .blue-text[
-### Small phytoplankton 
+### I considered two 6-year time periods:
+]
+.green-text[
+### 1977-1982
 
-### Large phytoplankton
-
-### _Daphnia_
-
-### non-_Daphnia_
+### 1989-1994
 ]
 
+
+---
+
+# Analysis: plankton groups
+
+.blue-text[
+## Small phytoplankton 
+
+## Large phytoplankton
+
+## _Daphnia_
+
+## non-_Daphnia_
+]
+
+
+---
+
+class: frimg
+
+background-image: url(figs/plank.png)
+background-size: 80%
+background-position: 50% 55%
+
+# The plankton
 
 
 ---
@@ -1753,7 +1777,7 @@ background-position: 50% 50%
 class: frimg
 
 background-image: url(figs/covars.png)
-background-size: 90%
+background-size: 85%
 background-position: 50% 50%
 
 # The covariates
@@ -1761,13 +1785,67 @@ background-position: 50% 50%
 
 ---
 
-# Summary
+# Stability metrics
+
+| Metric | | Early | | Late |  | Ives |
+|:----|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| Return rate (mean) |    | 0.89 |   | 0.65 |   | 0.77 |
+| Return rate (var) |   | 0.79 |   | 0.42 |   | 0.59 |
+| Reactivity |   | 1.0 |   | 0.41 |   | -0.26 |
+| % from species |   | 4% |   | 1% |   | 1% |
 
 .blue-text[
-### Something pithy...
+### The late period in L WA is more stable than the early
+
+### Midwestern lake is intermediate to the 2 L WA periods
 ]
 
 
+---
+
+# Stability metrics
+
+| Metric | | Early | | Late |  | Ives |
+|:----|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| Return rate (mean) |    | 0.89 |   | 0.65 |   | 0.77 |
+| Return rate (var) |   | 0.79 |   | 0.42 |   | 0.59 |
+| Reactivity |   | 1.0 |   | 0.41 |   | -0.26 |
+| % from species |   | 4% |   | 1% |   | 1% |
+
+.blue-text[
+### A previous meta-analysis found species interactions accounted for<br>5-60% (but only 2-10% in fish)
+]
+
+.gray-text.citation[Mutshinda et al (2009) _Proc R Soc B_]
+
+
+---
+
+# Sensitivity of $\pi_\mathbf{B}$
+
+.blue-text[
+### Early period: bottom-up effects of phytoplankton
+]
+
+.green-text[
+### Late period: rather mixed and modest
+]
+
+.orange-text[
+### Ives: density-dependent effects
+]
+
+
+
+---
+
+# Summary
+
+.blue-text[
+### Food web studies often focus on pairwise interactions
+
+### Examining the stability of the community is important as well
+]
 
 .futnote.purple-text[`r icon_style(fontawesome("envelope"), fill = "#844870")` scheuerl@uw.edu]
 
