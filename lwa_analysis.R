@@ -113,6 +113,7 @@ control_list <- list(
 
 lwa_fit <- MARSS(plank, model = model_list, control = control_list, method = "BFGS")
 
+saveRDS(lwa_fit, file = "lwa_fit.rds")
 
 
 
