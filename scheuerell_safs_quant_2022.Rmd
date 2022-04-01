@@ -1033,21 +1033,6 @@ mtext(expression(italic(b)==0.9), side = 3, line = 1, cex = 1.5)
 
 ---
 
-# A cautious note on rate of return
-
-.blue-text[
-### In deterministic models, rapid return rates make a system more predictable (stable)
-
-### In stochastic models, the rate of return is measured from some known observation
-
-### At $t = 0$ we have full knowledge of the the system, because $\sigma_t = \sigma_{\infty}[1 - (b^2)^t] = 0$
-
-### Over time $\sigma_t \rightarrow \sigma_{\infty}$, so information is lost more rapidly if the variance returns more rapidly
-]
-
-
----
-
 # Transition versus stationary
 
 .blue-text[
@@ -1751,10 +1736,28 @@ background-position: 50% 50%
 
 # Summary
 
+.blue-text[
+### Something pithy...
+]
+
 
 
 .futnote.purple-text[`r icon_style(fontawesome("envelope"), fill = "#844870")` scheuerl@uw.edu]
 
 .citation.blue-text[`r icon_style(fontawesome("twitter"), fill = "#488fdf")` @mark_scheuerell]
 
+
+---
+
+# A cautious note on rate of return
+
+.blue-text[
+### In deterministic models, rapid return rates make a system more predictable (stable)
+
+### In stochastic models, the rate of return is measured from some known observation
+
+### At $t = 0$ we have full knowledge of the the system, because $\sigma_t = \sigma_{\infty}[1 - (b^2)^t] = 0$
+
+### Over time $\sigma_t \rightarrow \sigma_{\infty}$, so information is lost more rapidly if the variance returns more rapidly
+]
 
