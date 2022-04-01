@@ -113,15 +113,15 @@ plank_1 <- plank %>%
   filter(Year >= 1977 & Year <= 1982) %>%
   select(-c("Year")) %>%
   as.matrix() %>%
-  zscore() %>%
-  t()
+  t() %>%
+  zscore()
 
 plank_2 <- plank %>%
   filter(Year >= 1989 & Year <= 1994) %>%
   select(-c("Year")) %>%
   as.matrix() %>%
-  zscore() %>%
-  t()
+  t() %>%
+  zscore()
 
 nn <- nrow(plank_1)
 
@@ -166,11 +166,13 @@ model_list <- list(
   c = cov_1,
   Z = "identity",
   A = "zero",
-  R = "diagonal and equal"
+  R = "diagonal and equal",
+  tinitx = 1
 )
 
 control_list <- list(
-  maxit = 5000
+  maxit = 5000,
+  allow.degen = TRUE
 )
 
 
@@ -187,36 +189,70 @@ saveRDS(lwa_fit_2, file = "lwa_fit_2.rds")
 
 
 
-
-lwa_fit <- readRDS(file = "lwa_fit.rds")
-
-B_fit <- coef(lwa_fit, type = "matrix")$B
-
-C_fit <- coef(lwa_fit, type = "matrix")$C
+# lwa_fit_1 <- MARSS(plank_1, model = model_list, control = control_list)
+# 
+# model_list$c <- cov_2
+# lwa_fit_2 <- MARSS(plank_2, model = model_list, control = control_list)
 
 
-pi_B <- det(B_fit)^2
-d_pi_B <- dpiB(B_fit)
+#### period 1 ####
 
-react <- log(max(svd(B_fit)$d))
+# lwa_fit_1 <- readRDS(file = "lwa_fit.rds")
 
-ret_mu <- max(abs(eigen(B_fit)$values))
+B_fit_1 <- coef(lwa_fit_1, type = "matrix")$B
 
-ret_sig <- max(abs(eigen(B_fit %x% B_fit)$values))
+C_fit_1 <- coef(lwa_fit_1, type = "matrix")$C
 
-LL(B_fit, C_fit)
 
-## rownames(plank)
-# [1,] "1"  "Cryptomonas"            
-# [2,] "2"  "Diatoms"                
-# [3,] "3"  "Greens"                 
-# [4,] "4"  "Bluegreens"             
-# [5,] "5"  "Conochilus"             
-# [6,] "6"  "Cyclops"                
-# [7,] "7"  "Daphnia"                
-# [8,] "8"  "Diaptomus"              
-# [9,] "9"  "Epischura"              
-# [10,] "10" "Leptodora"              
-# [11,] "11" "Non.daphnid.cladocerans"
-# [12,] "12" "Non.colonial.rotifers" 
+(pi_B_1 <- det(B_fit_1)^2)
+d_pi_B_1 <- dpiB(B_fit_1)
+
+(react_1 <- log(max(svd(B_fit_1)$d)))
+
+(ret_mu_1 <- max(abs(eigen(B_fit_1)$values)))
+
+(ret_sig_1 <- max(abs(eigen(B_fit_1 %x% B_fit_1)$values)))
+
+LL(B_fit_1, C_fit_1)
+
+
+#### period 2 ####
+
+# lwa_fit_2 <- readRDS(file = "lwa_fit.rds")
+
+B_fit_2 <- coef(lwa_fit_2, type = "matrix")$B
+
+C_fit_2 <- coef(lwa_fit_2, type = "matrix")$C
+
+
+(pi_B_2 <- det(B_fit_2)^2)
+d_pi_B_2 <- dpiB(B_fit_2)
+
+(react_2 <- log(max(svd(B_fit_2)$d)))
+
+(ret_mu_2 <- max(abs(eigen(B_fit_2)$values)))
+
+(ret_sig_2 <- max(abs(eigen(B_fit_2 %x% B_fit_2)$values)))
+
+LL(B_fit_2, C_fit_2)
+
+
+#### Ives et al (2003) ####
+
+Bi <- matrix(
+  c(0.5, 0, 0, 0,
+    0, 0.6, -0.02, 0,
+    0, 0, 0.77, 0,
+    0, 0.1, 0, 0.55),
+  4, 4, byrow = TRUE
+)
+
+(pi_B_i <- det(Bi)^2)
+(d_pi_B_i <- dpiB(Bi))
+
+(react_i <- log(max(svd(Bi)$d)))
+
+(ret_mu_i <- max(abs(eigen(Bi)$values)))
+
+(ret_sig_i <- max(abs(eigen(Bi %x% Bi)$values)))
 
